@@ -8,6 +8,34 @@
       "when": 1695820035332,
       "tag": "0000_awesome_longshot",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1697070560859,
+      "tag": "0001_dizzy_wolf_cub",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1697073446464,
+      "tag": "0002_sour_human_robot",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1697227800612,
+      "tag": "0003_illegal_sabra",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1697345008424,
+      "tag": "0004_exotic_maelstrom",
+      "breakpoints": true
     }
   ]
 }

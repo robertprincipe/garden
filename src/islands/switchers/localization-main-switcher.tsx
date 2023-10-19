@@ -47,10 +47,6 @@ export default function LocalizationMainSwitcher({
       >
         <span className="hidden sm:block">
           <LocaleFlagIcon locale={locale} />
-          {localeLabels[locale as keyof typeof localeLabels]}
-        </span>
-        <span className="block sm:hidden -mr-2">
-          <LocaleFlagIcon locale={locale} />
         </span>
       </Button>
     );
@@ -66,19 +62,19 @@ export default function LocalizationMainSwitcher({
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="outline-none">
           <Button variant="outline">
-            <span className="hidden md:block">
+            {/* <span className="hidden md:block">
               <span className="flex">
                 <LocaleFlagIcon locale={locale} />
                 {localeLabels[locale as keyof typeof localeLabels]}
               </span>
-            </span>
-            <span className="block md:hidden -mr-2">
+            </span> */}
+            <span className="flex items-center justify-center">
               <LocaleFlagIcon locale={locale} />
             </span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel className="font-heading">
+          <DropdownMenuLabel className="font-medium text-sm text-center py-1">
             {t("choose-language")}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -93,7 +89,9 @@ export default function LocalizationMainSwitcher({
                 className="flex"
               >
                 <LocaleFlagIcon locale={locale} />
-                {localeLabels[locale as keyof typeof localeLabels]}
+                <span className="ml-2">
+                  {localeLabels[locale as keyof typeof localeLabels]}
+                </span>
               </DropdownMenuRadioItem>
             ))}
           </DropdownMenuRadioGroup>
@@ -103,22 +101,22 @@ export default function LocalizationMainSwitcher({
   );
 }
 
-/** @see https://github.com/blefnk/relivator/pull/3/commits */
+/** @see https://github.com/blefnk/garden/pull/3/commits */
 
 type LocaleFlagIconProps = { locale: string };
 
 function LocaleFlagIcon({ locale }: LocaleFlagIconProps) {
   if (locale === "en") {
-    return <span aria-hidden="true" className="mr-2 fi fi-gb"></span>;
+    return <span aria-hidden="true" className="fi fi-gb"></span>;
   } else if (locale === "uk") {
-    return <span aria-hidden="true" className="mr-2 fi fi-ua"></span>;
+    return <span aria-hidden="true" className="fi fi-ua"></span>;
   } else if (locale === "pl") {
     return (
       <span
         aria-hidden="true"
-        className="mr-2 border border-zinc-200 border-b-0 dark:border-none fi fi-pl"
+        className="border border-zinc-200 border-b-0 dark:border-none fi fi-pl"
       ></span>
     );
   }
-  return <span aria-hidden="true" className={`mr-2 fi fi-${locale}`}></span>;
+  return <span aria-hidden="true" className={`fi fi-${locale}`}></span>;
 }

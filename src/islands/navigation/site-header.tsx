@@ -10,6 +10,7 @@ import { MobileMenu } from "~/islands/navigation/mobile-menu";
 import LocaleSwitcher from "~/islands/switchers/localization-main-switcher";
 import { ThemesGeneralSwitcher } from "~/islands/switchers/themes-general-switcher";
 
+import { ThemeToggle } from "../modules/theme-toggle";
 import UserMenu from "./user-menu";
 
 const NavbarStyles = tv({
@@ -45,8 +46,8 @@ export async function SiteHeader({
         />
         <div className="flex flex-1 items-center justify-end space-x-2">
           <Combobox />
-          {settings.themeToggleEnabled && <ThemesGeneralSwitcher />}
-          <CartSheet />
+          {settings.themeToggleEnabled && <ThemeToggle />}
+
           {settings.internationalizationEnabled && <LocaleSwitcher />}
           <UserMenu />
         </div>

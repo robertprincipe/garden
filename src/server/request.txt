@@ -25,8 +25,8 @@ export async function sendVerificationRequest({
     from: provider.from,
     to: identifier,
     subject: user?.emailVerified
-      ? "Sign in to Relivator"
-      : "Welcome to Relivator!",
+      ? "Sign in to garden"
+      : "Welcome to garden!",
     react: (
       <SignInEmail
         emailAddress={identifier}

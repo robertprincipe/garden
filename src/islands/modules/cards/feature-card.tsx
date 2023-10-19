@@ -49,7 +49,7 @@ export default function DeprecatedFeatureCards() {
                 <div className="flex items-center justify-center">
                   <div className="flex flex-1 bg-white">
                     <Image
-                      src="https://relivator.bleverse.com/logo.png"
+                      src="https://garden.bleverse.com/logo.png"
                       width={100}
                       height={100}
                       alt="Card image"

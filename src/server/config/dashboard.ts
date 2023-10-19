@@ -16,6 +16,12 @@ export const dashboardConfig: DashboardConfig = {
       items: [],
     },
     {
+      title: "Courses",
+      href: "/dashboard/courses",
+      icon: "pictureInPicture",
+      items: [],
+    },
+    {
       title: "Stores",
       href: "/dashboard/stores",
       icon: "store",

@@ -227,7 +227,7 @@ export function AddProductForm({ storeId }: AddProductFormProps) {
           </FormItem>
         </div>
         <FormItem className="flex w-full flex-col gap-1.5">
-          <FormLabel>Images</FormLabel>
+          <FormLabel>Imagen de portada</FormLabel>
           {files?.length ? (
             <div className="flex items-center gap-2">
               {files.map((file, i) => (
@@ -247,7 +247,7 @@ export function AddProductForm({ storeId }: AddProductFormProps) {
             <FileDialog
               setValue={form.setValue}
               name="images"
-              maxFiles={3}
+              maxFiles={1}
               maxSize={1024 * 1024 * 4}
               files={files}
               setFiles={setFiles}

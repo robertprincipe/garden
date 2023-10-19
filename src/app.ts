@@ -11,7 +11,7 @@ import { networks } from "~/server/config/socials";
 import { slugify } from "~/server/utils";
 
 export const appts = {
-  name: "Relivator",
+  name: "garden",
   social: networks({
     youtube: "@bleverse_com",
     discord: "Pb8uKbwpsJ",
@@ -34,7 +34,7 @@ export type SiteConfig = typeof siteConfig;
 
 const links = {
   twitter: "https://x.com/blefnk",
-  github: "https://github.com/blefnk/relivator",
+  github: "https://github.com/blefnk/garden",
   githubAccount: "https://github.com/blefnk",
   discord: "https://discord.gg/Pb8uKbwpsJ",
   facebook: "https://facebook.com/groups/bleverse",
@@ -45,13 +45,13 @@ export const contactConfig = {
 };
 
 export const REPOSITORY_OWNER = "blefnk";
-export const REPOSITORY_NAME = "relivator";
+export const REPOSITORY_NAME = "garden";
 export const REPOSITORY_URL = `https://github.com/${REPOSITORY_OWNER}/${REPOSITORY_NAME}`;
-export const baseUrl = "https://relivator.bleverse.com";
+export const baseUrl = "https://garden.bleverse.com";
 
 export const BASE_URL =
   process.env.NODE_ENV === "production" ? baseUrl : "http://localhost:3000";
-export const BRAND_NAME = "Relivator";
+export const BRAND_NAME = "garden";
 export const BRAND_DESCRIPTION =
   "Next.js 13 free store and dashboard template. It helps you build great eCommerce and SaaS apps faster than ever. Get it now!";
 
@@ -68,8 +68,8 @@ export const settings = {
 };
 
 export const siteConfig = {
-  name: "Relivator",
-  shortName: "Relivator",
+  name: "garden",
+  shortName: "garden",
   author: "Bleverse",
   description:
     "NextJS 13 free starter: store, landing, dashboard. It helps you build great eCommerce and SaaS apps faster than ever. Get it!",
@@ -96,7 +96,7 @@ export const siteConfig = {
     "PostgreSQL",
     "Radix Ui",
     "React",
-    "Relivator",
+    "garden",
     "Server Actions",
     "Server Components",
     "Shadcn/UI",
@@ -137,23 +137,6 @@ export const siteConfig = {
         },
       ],
     },
-    ...productCategories.map((category) => ({
-      title: category.title,
-      items: [
-        {
-          title: "All",
-          href: `/categories/${slugify(category.title)}`,
-          description: `All ${category.title}.`,
-          items: [],
-        },
-        ...category.subcategories.map((subcategory) => ({
-          title: subcategory.title,
-          href: `/categories/${slugify(category.title)}/${subcategory.slug}`,
-          description: subcategory.description,
-          items: [],
-        })),
-      ],
-    })),
   ] satisfies MainMenuItem[],
   links,
   footerNav: [
@@ -176,8 +159,8 @@ export const siteConfig = {
           external: true,
         },
         {
-          title: "Relivator",
-          href: "https://relivator.bleverse.com",
+          title: "garden",
+          href: "https://garden.bleverse.com",
           external: true,
         },
       ],
@@ -246,8 +229,8 @@ export const siteConfig = {
           external: true,
         },
         {
-          title: "Relivator",
-          href: "https://github.com/blefnk/relivator",
+          title: "garden",
+          href: "https://github.com/blefnk/garden",
           external: true,
         },
         {
@@ -270,7 +253,7 @@ export const heroHeader: HeroHeader = {
 
 export const featureCards: ContentSection = {
   header: `Powered by`,
-  subheader: `What Makes Relivator Possible`,
+  subheader: `What Makes garden Possible`,
   content: [
     {
       text: `Next.js`,
@@ -289,7 +272,7 @@ export const featureCards: ContentSection = {
 
 export const features: ContentSection = {
   header: `Features`,
-  subheader: `Why You Need to Download Relivator`,
+  subheader: `Why You Need to Download garden`,
   content: [
     {
       text: `SEO Optimized`,

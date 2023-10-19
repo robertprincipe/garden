@@ -81,6 +81,7 @@ export default function AuthPageContent({
     resolver: zodResolver(userAuthSchema),
     defaultValues: {
       email: "",
+      password: "",
     },
   });
 
@@ -89,7 +90,7 @@ export default function AuthPageContent({
     [form.formState.isSubmitting],
   );
 
-  const emailProvider = useMemo(() => providers?.email, [providers]);
+  const emailProvider = useMemo(() => providers?.credentials, [providers]);
   const oauthProviders = useMemo(
     () =>
       Object.values(providers ?? {}).filter(
@@ -123,9 +124,9 @@ export default function AuthPageContent({
       }
 
       try {
-        signInResult = await signIn("email", {
-          email: data.email.toLowerCase(),
-          redirect: false,
+        signInResult = await signIn("credentials", {
+          email: data.email.trim().toLowerCase(),
+          password: data.password,
           callbackUrl: searchParams?.get("from") ?? "/",
         });
       } catch (err) {
@@ -139,11 +140,11 @@ export default function AuthPageContent({
         });
       }
 
-      return toast({
-        title: "Check your email",
-        description:
-          "We sent you a login link. Be sure to check your spam too.",
-      });
+      // return toast({
+      //   title: "Check your email",
+      //   description:
+      //     "We sent you a login link. Be sure to check your spam too.",
+      // });
     },
     [isLoading, searchParams, toast],
   );
@@ -157,16 +158,6 @@ export default function AuthPageContent({
   };
 
   const providersConfig = [
-    {
-      id: "github",
-      name: "GitHub",
-      Component: <FaGithub size={24} />,
-    },
-    {
-      id: "discord",
-      name: "Discord",
-      Component: <FaDiscord size={24} />,
-    },
     {
       id: "google",
       name: "Google",
@@ -283,6 +274,61 @@ export default function AuthPageContent({
                                     <FormControl>
                                       <Input
                                         placeholder="name@example.com"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                  </FormItem>
+                                )}
+                              />
+
+                              <div className="bg-card">
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ipsum, deserunt.
+                              </div>
+
+                              <div className="bg-secondary">
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ipsum, deserunt.
+                              </div>
+
+                              <div className="bg-primary">
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ipsum, deserunt.
+                              </div>
+
+                              <div className="bg-muted">
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ipsum, deserunt.
+                              </div>
+
+                              <div className="bg-accent">
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ipsum, deserunt.
+                              </div>
+
+                              <div className="bg-ring">
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ipsum, deserunt.
+                              </div>
+
+                              <div className="bg-input">
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ipsum, deserunt.
+                              </div>
+
+                              <div className="bg-border">
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ipsum, deserunt.
+                              </div>
+
+                              <FormField
+                                control={form.control}
+                                name="password"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl>
+                                      <Input
+                                        placeholder="********"
                                         {...field}
                                       />
                                     </FormControl>

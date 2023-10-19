@@ -219,18 +219,18 @@
         "description": "Middleware authentication using NextAuth.js.",
         "title": "Authentication"
       },
-      "subtitle": "From code to design, Relivator has functionalities that supercharge your web projects.",
+      "subtitle": "From code to design, garden has functionalities that supercharge your web projects.",
       "text": {
         "description": "Manipulate app effortlessly with Server and Client Components. Use hook. And more.",
         "title": "React 18"
       },
-      "title": "Relivator Starter Features"
+      "title": "garden Starter Features"
     },
     "get-started": "See Starter Features",
     "heading": "Welcome!",
     "meta": {
-      "description": "Relivator built with Next.js",
-      "title": "Relivator"
+      "description": "garden built with Next.js",
+      "title": "garden"
     },
     "open-source": {
       "stars": "[GitHub]: This project has {count} stars! 😍",
@@ -238,12 +238,12 @@
       "stars#many": "[GitHub]: This project has {count} stars! 😍",
       "stars#one": "[GitHub]: This project has only one star... 😢",
       "subtitle": {
-        "first": "Bleverse Relivator champions open-source ethos and encourages collaborative code evolution.",
+        "first": "Bleverse garden champions open-source ethos and encourages collaborative code evolution.",
         "second": "Explore our codebase on"
       },
       "title": "Embrace Open Source"
     },
-    "subtitle": "Bleverse Relivator simplifies your development journey. Start with built-in features optimized for modern web development.",
+    "subtitle": "Bleverse garden simplifies your development journey. Start with built-in features optimized for modern web development.",
     "things": {
       "linkText": "Go to list"
     },
@@ -290,7 +290,7 @@
   },
   "meta": {
     "description": "Next.js 13 Starter",
-    "title": "Relivator"
+    "title": "garden"
   },
   "pages": {
     "about": {
@@ -307,7 +307,7 @@
           "vercel": "For deploying all my projects."
         }
       },
-      "subtitle": "Bleverse Relivator is a powerful Next.js TypeScript Tailwind starter. It streamlines the development process and provides a solid foundation for creating web projects. Feel free to use, adapt, and contribute to the project by {link}.",
+      "subtitle": "Bleverse garden is a powerful Next.js TypeScript Tailwind starter. It streamlines the development process and provides a solid foundation for creating web projects. Feel free to use, adapt, and contribute to the project by {link}.",
       "subtitle.link": "clicking here",
       "title": "About"
     },
@@ -333,12 +333,12 @@
           "description": "Middleware authentication using NextAuth.js.",
           "title": "Authentication"
         },
-        "subtitle": "From code to design, Relivator has functionalities that supercharge your web projects.",
+        "subtitle": "From code to design, garden has functionalities that supercharge your web projects.",
         "text": {
           "description": "Manipulate app effortlessly with Server and Client Components. Use hook. And more.",
           "title": "React 18"
         },
-        "title": "Relivator Starter Features"
+        "title": "garden Starter Features"
       },
       "get-started": "See Starter Features",
       "open-source": {
@@ -347,16 +347,16 @@
         "stars#many": "[GitHub]: This project has {count} stars! 😍",
         "stars#one": "[GitHub]: This project has only one star... 😢",
         "subtitle": {
-          "first": "Bleverse Relivator champions open-source ethos and encourages collaborative code evolution.",
+          "first": "Bleverse garden champions open-source ethos and encourages collaborative code evolution.",
           "second": "Explore our codebase on"
         },
         "title": "Embrace Open Source"
       },
-      "subtitle": "Bleverse Relivator simplifies your development journey. Start with built-in features optimized for modern web development.",
+      "subtitle": "Bleverse garden simplifies your development journey. Start with built-in features optimized for modern web development.",
       "title": "Discover the paramount tools for React, Next.js, and beyond. Tailored especially for you."
     },
     "not-found": {
-      "description": "The resource you're seeking might have been relocated or is not a part of Bleverse Relivator. Double-check the URL or explore other sections.",
+      "description": "The resource you're seeking might have been relocated or is not a part of Bleverse garden. Double-check the URL or explore other sections.",
       "go-home": "Return to home page",
       "title": "Page not found"
     },
@@ -567,7 +567,7 @@
       "title": "Features"
     },
     "hero": {
-      "description": "Join the Relivator community. \nChoose the plan that suits you best.",
+      "description": "Join the garden community. \nChoose the plan that suits you best.",
       "pricing": "Pricing"
     },
     "plans": {
@@ -576,7 +576,7 @@
     "questions": {
       "answer-card": "A la carte pricing allows you to customize your plan based on your specific needs. \nYou only pay for the features you need.",
       "answer-change": "Yes, you can change plans at any time.",
-      "answer-free": "Yes, Relivator offers a free plan with a basic feature set. \nYou can use it free of charge.",
+      "answer-free": "Yes, garden offers a free plan with a basic feature set. \nYou can use it free of charge.",
       "answer-limits": "If you exceed your plan limits, you can either upgrade your plan to get more resources or pay additional fees based on your excess usage.",
       "answer-nonprofit": "Yes, we offer discounts for nonprofits and educational institutions. \nContact us for more details.",
       "answer-payment": "We accept credit card payments and secure online payments. \nYou can also choose to pay monthly or annually.",
@@ -587,7 +587,7 @@
       "do-you-offer": "Do you offer discounts for nonprofits or educational institutions?",
       "how-does": "How does à la carte pricing work?",
       "how-is": "How is pricing calculated for teams?",
-      "is-there": "Is there a free version of Relivator?",
+      "is-there": "Is there a free version of garden?",
       "what-happens": "What happens if I exceed my plan limits?",
       "what-payment": "What payment methods do you accept?"
     }
@@ -601,7 +601,7 @@
     "providerButtonText": "Sign in with {name}"
   },
   "things": {
-    "heading": "Your Relivator",
+    "heading": "Your garden",
     "input": {
       "placeholder": "Enter a title",
       "submitButtonText": "Add to list"
@@ -612,7 +612,7 @@
     },
     "meta": {
       "description": "List of your personal things",
-      "title": "Your Relivator"
+      "title": "Your garden"
     },
     "signIn": "Please <link>sign in</link> to view it."
   },
@@ -621,7 +621,7 @@
     "categories": "-",
     "cta": "-",
     "hero": {
-      "title": "Free online tools from Relivator"
+      "title": "Free online tools from garden"
     },
     "title": "Tools"
   }

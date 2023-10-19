@@ -10,7 +10,7 @@ export default function GeneralShell({
 }: WithChildren<GeneralShellProps>) {
   return (
     <main className="flex min-h-screen flex-col flex-1">
-      <Shell className="container gap-12 max-w-4xl">{children}</Shell>
+      <Shell className="container gap-12">{children}</Shell>
     </main>
   );
 }

@@ -13,7 +13,7 @@ export const generateMetadata: GenerateMetadata = async () => {
 
   return {
     // title: t("title"),
-    metadataBase: new URL("https://relivator.bleverse.com"),
+    metadataBase: new URL("https://garden.bleverse.com"),
     description: "The best React 18 & Next.js 13 starter just for you.",
     keywords: "nextjs, starter, react, tools, bleverse, blefonix",
   };

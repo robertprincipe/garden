@@ -43,7 +43,6 @@ const nextConfig = {
    * Toggle experimental features.
    */
   experimental: {
-    serverComponentsExternalPackages: ["mysql2"],
     serverActions: true,
     mdxRs: true,
   },

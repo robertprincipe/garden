@@ -1,6 +1,6 @@
-# Relivator Next.js 13.5: Store | Landing | Dashboard (Template 2023)
+# garden Next.js 13.5: Store | Landing | Dashboard (Template 2023)
 
-**Relivator v1.0.0 is released! Now it's stable and ready for production! 🚀** _If you have used the project before, please double check your ENV file. NextAuth.js, PostgreSQL and next-intl are now used (instead of Clerk, MySQL and next-international)._
+**garden v1.0.0 is released! Now it's stable and ready for production! 🚀** _If you have used the project before, please double check your ENV file. NextAuth.js, PostgreSQL and next-intl are now used (instead of Clerk, MySQL and next-international)._
 
 ## 01. Follow Us Everywhere
 
@@ -17,11 +17,11 @@
 
 **We craft the world's most featured, global, and iconic Next.js starter template!** It's really huge! Step into the future with this ultimate Next.js starter! Beautifully created with ❤️ **Next.js 13 template** by **[@blefnk Nazarii Korniienko](https://github.com/blefnk)**, **[Bleverse](https://github.com/bs-oss)**, and its the most gorgeous, entire OSS community. The starter is perfectly opinionated and has i18n, means internationalization, and built with `app router` and `server actions` using `TypeScript` programming language. Everything has been set up for you. It's more than just code; it's a journey. You're not on this journey alone. Download it and move really faster than ever, than anyone!
 
-When you give us the star [on this repo](https://github.com/blefnk/relivator) and introduce yourself in the [Discord Channel of the project](https://discord.gg/Pb8uKbwpsJ), you take part in a lotteries where the 5 randomly selected persons will win the early-access to some secret Relivator features! ⭐ The first gift contest will be started once we reach 100 stars and have at least 5 users participate in the "Relivator 100 Stars" thread (_just say hello or tell something about yourself there_). This thread can be found in the `bleverse-events` channel [on our Discord server](https://discord.gg/Pb8uKbwpsJ). ✨ _More stars lead to more features!_
+When you give us the star [on this repo](https://github.com/blefnk/garden) and introduce yourself in the [Discord Channel of the project](https://discord.gg/Pb8uKbwpsJ), you take part in a lotteries where the 5 randomly selected persons will win the early-access to some secret garden features! ⭐ The first gift contest will be started once we reach 100 stars and have at least 5 users participate in the "garden 100 Stars" thread (_just say hello or tell something about yourself there_). This thread can be found in the `bleverse-events` channel [on our Discord server](https://discord.gg/Pb8uKbwpsJ). ✨ _More stars lead to more features!_
 
-**🔥 We are growing so fast! Many thanks [to everyone for the stars](https://github.com/blefnk/relivator/stargazers)! Here are the stargazers over time:**
+**🔥 We are growing so fast! Many thanks [to everyone for the stars](https://github.com/blefnk/garden/stargazers)! Here are the stargazers over time:**
 
-[![Star History Chart](https://api.star-history.com/svg?repos=blefnk/relivator&type=Timeline)](https://star-history.com/#blefnk/relivator&Timeline)
+[![Star History Chart](https://api.star-history.com/svg?repos=blefnk/garden&type=Timeline)](https://star-history.com/#blefnk/garden&Timeline)
 
 We've laid the groundwork; now, grab it, dive in and accelerate your development. This is the space where we're playing with everything new in Next.js 13. Stumbled upon something? Use repository discussions, raise an issue right here, or DM us on 𝕏/Twitter [@blefnk](https://x.com/blefnk). Btw, project takes some inspirations from T3 and similar stacks. Our own stack beside other includes also many more other things. Just get it and enjoy! And remember! We love your feedback. We love your stars. So smash it, please! And make your forks! It helps the project to be even coolest! If you've got some coding magic up your sleeve, contributions are always celebrated! 🎉
 
@@ -29,10 +29,10 @@ We've laid the groundwork; now, grab it, dive in and accelerate your development
 
 [![Join the Bleverse Discord](https://discordapp.com/api/guilds/1075533942096150598/widget.png?style=banner2)][bleverse-discord]
 
-![Bleverse Relivator Landing Page Screenshot](/public/screenshot.png)
+![Bleverse garden Landing Page Screenshot](/public/screenshot.png)
 
 > **Note**
-> This README tries to be really useful. By this reason it requires many of text. It means the some of text may be outdated, and will be updated as we scaling. So please let us know on the [discussion page](https://github.com/blefnk/relivator/discussions/6) if you notice any minor issues in the project, such as outdated information, broken links, grammatical or spelling mistakes etc. in the README.md or another files.
+> This README tries to be really useful. By this reason it requires many of text. It means the some of text may be outdated, and will be updated as we scaling. So please let us know on the [discussion page](https://github.com/blefnk/garden/discussions/6) if you notice any minor issues in the project, such as outdated information, broken links, grammatical or spelling mistakes etc. in the README.md or another files.
 
 _You can also check [our another free Next.js 13 starter](https://github.com/blefnk/reliverse). This one starter, a monorepo, offers you tech used in the current starter plus also: Turborepo/Turbopack, Prisma, Valibot, Lucia, Clerk, and much more. It means there we're very experimentally trying to implement all the important and most used tech together._
 
@@ -49,7 +49,7 @@ The project has a huge plans! So we are very appreciate any help! Here is the th
 
 You can also use `Cmd/Ctrl+Shift+F` in VSCode to search for `todo:`.
 
-Please **check [Commits](https://github.com/blefnk/relivator/issues) tab** to see another things where help is needed.
+Please **check [Commits](https://github.com/blefnk/garden/issues) tab** to see another things where help is needed.
 
 Besides it, check the v2.0.0-v3.0.0 Project Roadmap below to get know what things can be implemented in this Next.js starter.
 
@@ -85,7 +85,7 @@ This roadmap outlines the key features and improvements to be implemented in thi
 
 This roadmap outlines the key features and improvements to be implemented in this Next.js starter. Not marked things may be already configured, but was not tested too much. If mistakes here, please create an issue.
 
-1. [ ] 🦾 Partially complete BA11YC (Bleverse Accessability Convention) checklist and Relivator's own checklist section (find it below for `1.0.0`-`2.0.0`).
+1. [ ] 🦾 Partially complete BA11YC (Bleverse Accessability Convention) checklist and garden's own checklist section (find it below for `1.0.0`-`2.0.0`).
 2. [ ] 🧁 Full [Bun](https://bun.sh) support and compatibility.
 3. [ ] 💎 Advanced implementation of user subscriptions and checkout system via **Stripe**.
 4. [ ] 🏬 Advanced implementation of storefront with products, categories, and subcategories.
@@ -129,7 +129,7 @@ This roadmap outlines the key features and improvements to be implemented in thi
 42. [ ] 🦾 Accessability everywhere, for app users UI (User Interface) with UX (User Experience), and for developers DX (Developer Experience). And with usability, but still with beauty in the mind.
 43. [ ] 🌉 Better `middleware.ts` configuration with multi-mw implementation.
 44. [ ] 🪶 All website languages must be free of grammatical and spelling errors and written in accordance with the newest rules of each language.
-45. [ ] 😜 Minimal possible references to Relivator, Bleverse, etc. to be really easy-starter. Using variables from `app.ts` everywhere.
+45. [ ] 😜 Minimal possible references to garden, Bleverse, etc. to be really easy-starter. Using variables from `app.ts` everywhere.
 46. [ ] 🎯 Maximum possible for the app performance points on services like Google PageSpeed Insights. Also app must pass all hard tests.
 
 ### 04.03. Roadmap Checklist For **v3.0.0** Release
@@ -143,7 +143,7 @@ This roadmap outlines the key features and improvements to be implemented in thi
 5. [ ] ❇️ Achieve as few files as possible by combining similar things, etc.
 6. [ ] 🌐 Translate README.md and/or similar files into other languages.
 
-### 04.04. Relivator `1.0.0`-`2.0.0` Accessability Checklist
+### 04.04. garden `1.0.0`-`2.0.0` Accessability Checklist
 
 _The section will be expanded soon._
 
@@ -154,7 +154,7 @@ _The section will be expanded soon._
 
 <!-- TOC start -->
 
-- [Relivator Next.js 13.5: Store | Landing | Dashboard (Template 2023)](#relivator-nextjs-135-store--landing--dashboard-template-2023)
+- [garden Next.js 13.5: Store | Landing | Dashboard (Template 2023)](#garden-nextjs-135-store--landing--dashboard-template-2023)
   - [01. Follow Us Everywhere](#01-follow-us-everywhere)
   - [02. The Bleverse Framework for the Web](#02-the-bleverse-framework-for-the-web)
   - [03. We are Waiting for Your Help](#03-we-are-waiting-for-your-help)
@@ -162,7 +162,7 @@ _The section will be expanded soon._
     - [04.01. Roadmap Checklist For **v1.0.0** Release](#0401-roadmap-checklist-for-v100-release)
     - [04.02. Roadmap Checklist For **v2.0.0** Release](#0402-roadmap-checklist-for-v200-release)
     - [04.03. Roadmap Checklist For **v3.0.0** Release](#0403-roadmap-checklist-for-v300-release)
-    - [04.04. Relivator `1.0.0`-`2.0.0` Accessability Checklist](#0404-relivator-100-200-accessability-checklist)
+    - [04.04. garden `1.0.0`-`2.0.0` Accessability Checklist](#0404-garden-100-200-accessability-checklist)
   - [06. Table of Contents](#06-table-of-contents)
   - [07. Recommendations \& Why We Use This And That](#07-recommendations--why-we-use-this-and-that)
   - [08. Bun Support \& Compatibility](#08-bun-support--compatibility)
@@ -189,7 +189,7 @@ _The section will be expanded soon._
     - [20.01. Code Guide and Recommendations](#2001-code-guide-and-recommendations)
   - [21. Interesting Things](#21-interesting-things)
     - [21.01. Typical Workflow How App Works](#2101-typical-workflow-how-app-works)
-    - [21.02. What Relivator means?](#2102-what-relivator-means)
+    - [21.02. What garden means?](#2102-what-garden-means)
   - [22. License](#22-license)
 
 <!-- TOC end -->
@@ -204,11 +204,11 @@ Currently we don't use Contentlayer. It still unstable with Windows. For this re
 
 We recommend to clean browser cache and delete `.next` folder from time to time, to ensure that if everything works as expected.
 
-![Bleverse Relivator OG Image](/public/og-image.png)
+![Bleverse garden OG Image](/public/og-image.png)
 
 ## 08. [Bun](https://bun.sh) Support & Compatibility
 
-The `Relivator` already can be used with some `Bun` awesome features. Currently we recommend to use `pnpm` for this starter. We try to ship the full as possible Bun support and compatibility as soon as the Windows binaries will be released.
+The `garden` already can be used with some `Bun` awesome features. Currently we recommend to use `pnpm` for this starter. We try to ship the full as possible Bun support and compatibility as soon as the Windows binaries will be released.
 
 _The section will be expanded soon._
 
@@ -257,9 +257,9 @@ Define default values for environment variables required to run the app. Never s
 
 You can [read more about environment variables here](https://nextjs.org/docs/app/building-your-application/configuring/environment-variables).
 
-`.env.example` file was simplified so much with the 1.0.0 Relivator release, and will be even more simplified in the next versions. We plan to implement if the specific value is not specified, then the app will still be fine compiled by disabling this env related functional.
+`.env.example` file was simplified so much with the 1.0.0 garden release, and will be even more simplified in the next versions. We plan to implement if the specific value is not specified, then the app will still be fine compiled by disabling this env related functional.
 
-**🟢 Explanations to [`.env.example`](https://github.com/blefnk/relivator/blob/main/.env.example) file (COPY DATA FROM THERE TO NEW `.env` FILE)**
+**🟢 Explanations to [`.env.example`](https://github.com/blefnk/garden/blob/main/.env.example) file (COPY DATA FROM THERE TO NEW `.env` FILE)**
 
 1. **Database**
 
@@ -365,7 +365,7 @@ corepack enable
 Clone the repository.
 
 ```bash
-git clone https://github.com/blefnk/relivator.git
+git clone https://github.com/blefnk/garden.git
 ```
 
 Get your environment variables in check and update the variables.
@@ -410,7 +410,7 @@ _And, ladies and gentlemen, it's perfectly ready!_
 
 ## 14. Database
 
-Drizzle ORM in the Relivator is set up to use be ready for serverless environments by default. The project build with [PostgresJS](https://orm.drizzle.team/docs/quick-postgresql/postgresjs) and uses `[pg](https://orm.drizzle.team/docs/quick-postgresql/node-postgres)` ([docs](https://neon.tech/docs/serverless/serverless-driver#pool-or-client)), so any PostgreSQL-like supported database services will work. Everything in the project currently set up serverless using [@neondatabase/serverless](https://orm.drizzle.team/docs/quick-postgresql/neon). Simply set `DATABASE_URL` in created by you `.env` file and you are ready to go. You can learn more about it in the [env related section](#12-environment-variables) of this readme.
+Drizzle ORM in the garden is set up to use be ready for serverless environments by default. The project build with [PostgresJS](https://orm.drizzle.team/docs/quick-postgresql/postgresjs) and uses `[pg](https://orm.drizzle.team/docs/quick-postgresql/node-postgres)` ([docs](https://neon.tech/docs/serverless/serverless-driver#pool-or-client)), so any PostgreSQL-like supported database services will work. Everything in the project currently set up serverless using [@neondatabase/serverless](https://orm.drizzle.team/docs/quick-postgresql/neon). Simply set `DATABASE_URL` in created by you `.env` file and you are ready to go. You can learn more about it in the [env related section](#12-environment-variables) of this readme.
 
 If you want to use another serverless provider, like [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres), just instead of [@neondatabase/serverless](https://orm.drizzle.team/docs/quick-postgresql/neon) package use [@vercel/postgres](https://orm.drizzle.team/docs/quick-postgresql/vercel) everywhere and you can still use `[postgres](https://orm.drizzle.team/docs/quick-postgresql/postgresjs)` or `[pg](https://orm.drizzle.team/docs/quick-postgresql/node-postgres)` driver in the`drizzle.config.ts` file.
 
@@ -446,7 +446,7 @@ Follow the deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 
 Know how to migrate your project to the current starter. Migration guides are both for app and pages directories. Your old starter may use Prisma, Zod, and other things.
 
-The content of this section is not yet ready. Check back in a few days. Possible will be moved to [the project wiki](https://github.com/blefnk/relivator/wiki). Possible stacks: [Original Next.js 13 Boilerplate](https://vercel.com/templates/next.js/nextjs-boilerplate), [Original T3 Stack](https://create.t3.gg), [Shadcn Taxonomy](https://github.com/shadcn-ui/taxonom), [Vercel Store](https://vercel.store), [SkateShop](https://github.com/sadmann7/skateshop), [OneStopShop](https://github.com/jackblatch/OneStopShop), [Medusa](https://github.com/medusajs/medusa), [and so on](https://github.com/blefnk/relivator/wiki/Project-Credits-&-Contributors).
+The content of this section is not yet ready. Check back in a few days. Possible will be moved to [the project wiki](https://github.com/blefnk/garden/wiki). Possible stacks: [Original Next.js 13 Boilerplate](https://vercel.com/templates/next.js/nextjs-boilerplate), [Original T3 Stack](https://create.t3.gg), [Shadcn Taxonomy](https://github.com/shadcn-ui/taxonom), [Vercel Store](https://vercel.store), [SkateShop](https://github.com/sadmann7/skateshop), [OneStopShop](https://github.com/jackblatch/OneStopShop), [Medusa](https://github.com/medusajs/medusa), [and so on](https://github.com/blefnk/garden/wiki/Project-Credits-&-Contributors).
 
 ## 17. UI components
 
@@ -498,15 +498,15 @@ pnpm test
 
 ## 19. Say Thank You to Them
 
-If you've ever wondered which Next.js starter to choose for your next project, especially when it comes to scaling an online store, whether it's [Vercel Store](https://vercel.store), [SkateShop](https://github.com/sadmann7/skateshop), [OneStopShop](https://github.com/jackblatch/OneStopShop), [Taxonomy](https://github.com/shadcn-ui/taxonomy)/[nextflix](https://github.com/Apestein/nextflix), [Medusa](https://github.com/medusajs/medusa), [and so on](https://github.com/blefnk/relivator/wiki/Project-Credits-&-Contributors), — then stop right here.
+If you've ever wondered which Next.js starter to choose for your next project, especially when it comes to scaling an online store, whether it's [Vercel Store](https://vercel.store), [SkateShop](https://github.com/sadmann7/skateshop), [OneStopShop](https://github.com/jackblatch/OneStopShop), [Taxonomy](https://github.com/shadcn-ui/taxonomy)/[nextflix](https://github.com/Apestein/nextflix), [Medusa](https://github.com/medusajs/medusa), [and so on](https://github.com/blefnk/garden/wiki/Project-Credits-&-Contributors), — then stop right here.
 
-But **if you need a MONSTER**, a tool for all life situations, then _Relivator is definitely what you need to fork or use as template_ right now! Relivator already includes a lot of things from all those starters, and even-even more! It aims to break all possible boundaries of Next.js and React capabilities. With Relivator, your hands are completely free.
+But **if you need a MONSTER**, a tool for all life situations, then _garden is definitely what you need to fork or use as template_ right now! garden already includes a lot of things from all those starters, and even-even more! It aims to break all possible boundaries of Next.js and React capabilities. With garden, your hands are completely free.
 
 All of these projects are incredibly amazing, and if you're into minimalism, we're highly recommend checking them out ❤️. The creators of these starters are super-mega-cool people, and we're endlessly thank them all 🙏; without them, this starter wouldn't exist.
 
 ## 19. Recommended Things to Learn
 
-1. [Relivator: Next.js 13 Starter (Release Announce of Relivator on Medium)](https://cutt.ly/awf6fScS) by [Nazarii Korniienko @Blefnk](https://github.com/blefnk)
+1. [garden: Next.js 13 Starter (Release Announce of garden on Medium)](https://cutt.ly/awf6fScS) by [Nazarii Korniienko @Blefnk](https://github.com/blefnk)
 2. [Welcome to the Wild World of TypeScript, Mate! Is it scary?](https://cutt.ly/CwjVPUNu) by [Nazarii Korniienko @Blefnk](https://github.com/blefnk)
 3. [Thoughts on Next.js 13, Server Actions, Drizzle, Neon, Clerk, and More](https://github.com/Apestein/nextflix/blob/main/README.md#overall-thoughts) by [@Apestein](https://github.com/Apestein)
 
@@ -514,15 +514,15 @@ _You can find more sources to learn in the files of the current repository. This
 
 ## 20. Contributing and Credits
 
-Contributions are welcome! We thank everyone for their contributions to this repository. Your contributions will be acknowledged. Please open an issue if you have any questions or suggestions. See the [contributing guide](https://github.com/blefnk/relivator/blob/main/contributing.md) for more information.
+Contributions are welcome! We thank everyone for their contributions to this repository. Your contributions will be acknowledged. Please open an issue if you have any questions or suggestions. See the [contributing guide](https://github.com/blefnk/garden/blob/main/contributing.md) for more information.
 
-Please visit [this special wiki page](https://github.com/blefnk/relivator/wiki/Project-Credits-&-Contributors) to see the full list of credits and contributors.
+Please visit [this special wiki page](https://github.com/blefnk/garden/wiki/Project-Credits-&-Contributors) to see the full list of credits and contributors.
 
-**To contribute to Bleverse Relivator, follow these steps:**
+**To contribute to Bleverse garden, follow these steps:**
 
 _The section will be improved with describing the more easier steps to make it all ready._
 
-1. Please read [CONTRIBUTING.md](https://github.com/blefnk/relivator/blob/main/contributing.md) page first.
+1. Please read [CONTRIBUTING.md](https://github.com/blefnk/garden/blob/main/contributing.md) page first.
 2. Fork our use as template this repository.
 3. Create a branch: `git checkout -b <branch_name>`.
 4. Make your changes and commit them: `git commit -m '<commit_message>'`
@@ -550,13 +550,13 @@ _The section will be implemented soon._
 3. middleware.ts
 4. ...
 
-### 21.02. What Relivator means?
+### 21.02. What garden means?
 
-The author of this project, [@blefnk](https://github.com/blefnk), was teleported to the central universe of the Bleverse, short for the Blefonix Multiverse. There, he met a few individuals who informed him that this central universe is known as Relivator. A rumor circulates that within Relivator exists a tree. Those who have seen this tree claim to have heard echoes that sounded like `ré-li-vá-to`, which inspired both the name of the tree and of Relivator itself. The author is also writing a book based on the stories told to him by the inhabitants of Relivator and the entire Bleverse. An excerpt from this book will soon be [available in its own repository](https://github.com/blefnk/bleversum).
+The author of this project, [@blefnk](https://github.com/blefnk), was teleported to the central universe of the Bleverse, short for the Blefonix Multiverse. There, he met a few individuals who informed him that this central universe is known as garden. A rumor circulates that within garden exists a tree. Those who have seen this tree claim to have heard echoes that sounded like `ré-li-vá-to`, which inspired both the name of the tree and of garden itself. The author is also writing a book based on the stories told to him by the inhabitants of garden and the entire Bleverse. An excerpt from this book will soon be [available in its own repository](https://github.com/blefnk/bleversum).
 
 ## 22. License
 
-This project is MIT-licensed and is free to use and modify for your own projects. Check the [LICENSE.md](https://github.com/blefnk/relivator/LICENSE.md) file for details.
+This project is MIT-licensed and is free to use and modify for your own projects. Check the [LICENSE.md](https://github.com/blefnk/garden/LICENSE.md) file for details.
 
 ---
 

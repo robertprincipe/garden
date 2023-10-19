@@ -7,7 +7,8 @@ import { revalidatePath } from "next/cache";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { CommentTuple, type CheckoutItem } from "~/types";
-import { eq } from "drizzle-orm";
+import bcrypt from "bcryptjs";
+import { eq, or } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import type { Stripe } from "stripe";
 import { z } from "zod";
@@ -23,6 +24,7 @@ import {
   comments,
   payments,
   stores,
+  User,
   users,
 } from "~/data/db/schema";
 import {
@@ -197,3 +199,23 @@ export const createCheckoutSession = authAction(
     }
   },
 ); */
+
+export const signUpAction = async (input: User) => {
+  const sameEmail = await db.query.users.findFirst({
+    where: or(eq(users.email, input.email), eq(users.name, input.name)),
+  });
+
+  if (sameEmail) {
+    throw new Error("Email or nickname already exists");
+  }
+
+  const passwordHash = await bcrypt.hash(input.password!, 10);
+
+  await db.insert(users).values({
+    email: input.email,
+    name: input.name,
+    password: passwordHash,
+  });
+
+  revalidatePath("/");
+};

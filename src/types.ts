@@ -271,3 +271,24 @@ export interface UserSubscriptionPlan extends SubscriptionPlan {
   isCanceled: boolean;
   isActive: boolean;
 }
+
+export type Chapter = {
+  id: number;
+  title: string;
+  handle: string;
+  position: number;
+  summary: string;
+  video: StoredFile;
+  length: number;
+  active: boolean;
+  createdAt: Date;
+};
+
+export type Unit = {
+  id: number;
+  title: string;
+  position: number;
+  chapters: Chapter[];
+  active: boolean;
+  createdAt: Date;
+};

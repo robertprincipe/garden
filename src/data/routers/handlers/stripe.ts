@@ -110,7 +110,7 @@ export const handleInvoicePaid = async ({
   if (invoice?.amount_paid > 0) {
     await axios.post(`${process.env.DISCORD_WEBHOOK_URL}`, {
       username: "bleverse",
-      avatar_url: "https://relivator.bleverse.com/logo.png",
+      avatar_url: "https://garden.bleverse.com/logo.png",
       embeds: [
         {
           title: `🚀 New stripe payment - ${numberToMoney(

@@ -113,5 +113,5 @@ export function getDashboardRedirectPath(input: {
 
   return isActive && hasEnoughStores
     ? "/dashboard/billing"
-    : "/dashboard/stores/new";
+    : "/dashboard/courses/new";
 }

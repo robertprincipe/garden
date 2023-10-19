@@ -59,19 +59,19 @@ const dictionary = {
     "not-found": {
       title: "Page not found",
       description:
-        "The resource you're seeking might have been relocated or is not a part of Bleverse Relivator. Double-check the URL or explore other sections.",
+        "The resource you're seeking might have been relocated or is not a part of Bleverse garden. Double-check the URL or explore other sections.",
       "go-home": "Return to home page",
     },
     home: {
       title:
         "Discover the paramount {tools} for React, Next.js, and beyond. Tailored especially for you.",
       subtitle:
-        "Bleverse Relivator simplifies your development journey. Start with built-in features optimized for modern web development.",
+        "Bleverse garden simplifies your development journey. Start with built-in features optimized for modern web development.",
       "get-started": "See Starter Features",
       features: {
-        title: "Relivator Starter Features",
+        title: "garden Starter Features",
         subtitle:
-          "From code to design, Relivator has functionalities that supercharge your web projects.",
+          "From code to design, garden has functionalities that supercharge your web projects.",
         cryptography: {
           title: "Next.js 13",
           description:
@@ -105,7 +105,7 @@ const dictionary = {
         title: "Embrace Open Source",
         subtitle: {
           first:
-            "Bleverse Relivator champions open-source ethos and encourages collaborative code evolution.",
+            "Bleverse garden champions open-source ethos and encourages collaborative code evolution.",
           second: "Explore our codebase on",
         },
         "stars#one": "[GitHub]: This project has only one star... 😢",
@@ -117,7 +117,7 @@ const dictionary = {
     about: {
       title: "About",
       subtitle:
-        "Bleverse Relivator is a powerful Next.js TypeScript Tailwind starter. It streamlines the development process and provides a solid foundation for creating web projects. Feel free to use, adapt, and contribute to the project by {link}.",
+        "Bleverse garden is a powerful Next.js TypeScript Tailwind starter. It streamlines the development process and provides a solid foundation for creating web projects. Feel free to use, adapt, and contribute to the project by {link}.",
       "subtitle.link": "clicking here",
       credits: {
         title: "Credits",

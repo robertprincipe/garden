@@ -39,7 +39,7 @@ export function MobileMenu({
         >
           <Icons.menu className="h-6 w-6" />
           <span className="sr-only">Toggle Menu</span>
-          <span className="ml-2 font-heading tracking-wide">Relivator</span>
+          <span className="ml-2 font-heading tracking-wide">garden</span>
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="pl-1 pr-0">

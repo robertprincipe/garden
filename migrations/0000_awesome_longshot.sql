@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS "user" (
 	"emailVerified" timestamp,
 	"email" text DEFAULT 'fake.data@gmail.com',
 	"name" text DEFAULT 'Fake Temp Data Name',
-	"image" text DEFAULT 'https://relivator.bleverse.com/logo.png',
+	"image" text DEFAULT 'https://garden.bleverse.com/logo.png',
 	"subscription" "subscription" DEFAULT 'Starter',
 	"isSubscribed" boolean DEFAULT false NOT NULL,
 	"isCanceled" boolean DEFAULT false NOT NULL,

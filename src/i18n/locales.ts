@@ -1,14 +1,10 @@
-export const locales = ["de", "en", "es", "fr", "it", "pl", "tr", "uk"];
+export const locales = ["de", "en", "es", "fr"];
 
 export const defaultLocale = "en";
 
 export const localeLabels = {
-  de: "German",
+  de: "Deutsche",
   en: "English",
-  es: "Spanish",
-  fr: "French",
-  it: "Italian",
-  pl: "Polish",
-  tr: "Turkish",
-  uk: "Ukrainian",
+  es: "Español",
+  fr: "Français",
 };

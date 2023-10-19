@@ -219,18 +219,18 @@
         "description": "NextAuth.js kullanarak ara yazılım kimlik doğrulaması.",
         "title": "Kimlik doğrulama"
       },
-      "subtitle": "Relivator, koddan tasarıma kadar web projelerinizi güçlendiren işlevlere sahiptir.",
+      "subtitle": "garden, koddan tasarıma kadar web projelerinizi güçlendiren işlevlere sahiptir.",
       "text": {
         "description": "Sunucu ve Istemci Bileşenleri ile uygulamayı zahmetsizce yönetin. \nKanca kullanın. \nVe dahası.",
         "title": "Tepki 18"
       },
-      "title": "Relivator Başlangıç Özellikleri"
+      "title": "garden Başlangıç Özellikleri"
     },
     "get-started": "Bkz. Başlangıç Özellikleri",
     "heading": "Hoş geldiniz!",
     "meta": {
-      "description": "Next.js ile oluşturulmuş Relivator",
-      "title": "Relivator"
+      "description": "Next.js ile oluşturulmuş garden",
+      "title": "garden"
     },
     "open-source": {
       "stars": "[GitHub]: Bu projede {count} yıldız var! \n😍",
@@ -238,12 +238,12 @@
       "stars#many": "[GitHub]: Bu projede {count} yıldız var! \n😍",
       "stars#one": "[GitHub]: Bu projenin yalnızca bir yıldızı var... 😢",
       "subtitle": {
-        "first": "Bleverse Relivator açık kaynak ahlakını savunur ve işbirliğine dayalı kod gelişimini teşvik eder.",
+        "first": "Bleverse garden açık kaynak ahlakını savunur ve işbirliğine dayalı kod gelişimini teşvik eder.",
         "second": "Kod tabanımızı keşfedin"
       },
       "title": "Açık Kaynağı Kucaklayın"
     },
-    "subtitle": "Bleverse Relivator gelişim yolculuğunuzu kolaylaştırır. \nModern web geliştirme için optimize edilmiş yerleşik özelliklerle başlayın.",
+    "subtitle": "Bleverse garden gelişim yolculuğunuzu kolaylaştırır. \nModern web geliştirme için optimize edilmiş yerleşik özelliklerle başlayın.",
     "things": {
       "linkText": "Listeye Git"
     },
@@ -307,7 +307,7 @@
           "vercel": "For deploying all my projects."
         }
       },
-      "subtitle": "Bleverse Relivator is a powerful Next.js TypeScript Tailwind starter. It streamlines the development process and provides a solid foundation for creating web projects. Feel free to use, adapt, and contribute to the project by {link}.",
+      "subtitle": "Bleverse garden is a powerful Next.js TypeScript Tailwind starter. It streamlines the development process and provides a solid foundation for creating web projects. Feel free to use, adapt, and contribute to the project by {link}.",
       "subtitle.link": "clicking here",
       "title": "About"
     },
@@ -333,12 +333,12 @@
           "description": "Middleware authentication using NextAuth.js.",
           "title": "Authentication"
         },
-        "subtitle": "From code to design, Relivator has functionalities that supercharge your web projects.",
+        "subtitle": "From code to design, garden has functionalities that supercharge your web projects.",
         "text": {
           "description": "Manipulate app effortlessly with Server and Client Components. Use hook. And more.",
           "title": "React 18"
         },
-        "title": "Relivator Starter Features"
+        "title": "garden Starter Features"
       },
       "get-started": "See Starter Features",
       "open-source": {
@@ -347,16 +347,16 @@
         "stars#many": "[GitHub]: This project has {count} stars! 😍",
         "stars#one": "[GitHub]: This project has only one star... 😢",
         "subtitle": {
-          "first": "Bleverse Relivator champions open-source ethos and encourages collaborative code evolution.",
+          "first": "Bleverse garden champions open-source ethos and encourages collaborative code evolution.",
           "second": "Explore our codebase on"
         },
         "title": "Embrace Open Source"
       },
-      "subtitle": "Bleverse Relivator simplifies your development journey. Start with built-in features optimized for modern web development.",
+      "subtitle": "Bleverse garden simplifies your development journey. Start with built-in features optimized for modern web development.",
       "title": "Discover the paramount tools for React, Next.js, and beyond. Tailored especially for you."
     },
     "not-found": {
-      "description": "The resource you're seeking might have been relocated or is not a part of Bleverse Relivator. Double-check the URL or explore other sections.",
+      "description": "The resource you're seeking might have been relocated or is not a part of Bleverse garden. Double-check the URL or explore other sections.",
       "go-home": "Return to home page",
       "title": "Page not found"
     },
@@ -567,7 +567,7 @@
       "title": "Özellikler"
     },
     "hero": {
-      "description": "Relivator topluluğuna katılın. \nSize en uygun planı seçin.",
+      "description": "garden topluluğuna katılın. \nSize en uygun planı seçin.",
       "pricing": "Fiyatlandırma"
     },
     "plans": {
@@ -576,7 +576,7 @@
     "questions": {
       "answer-card": "Alakart fiyatlandırma, planınızı özel ihtiyaçlarınıza göre özelleştirmenize olanak tanır. \nYalnızca ihtiyacınız olan özellikler için ödeme yaparsınız.",
       "answer-change": "Evet, planları istediğiniz zaman değiştirebilirsiniz.",
-      "answer-free": "Evet, Relivator temel özelliklere sahip ücretsiz bir plan sunuyor. \nÜcretsiz olarak kullanabilirsiniz.",
+      "answer-free": "Evet, garden temel özelliklere sahip ücretsiz bir plan sunuyor. \nÜcretsiz olarak kullanabilirsiniz.",
       "answer-limits": "Plan sınırlarınızı aşarsanız daha fazla kaynak almak için planınızı yükseltebilir veya fazla kullanımınıza göre ek ücret ödeyebilirsiniz.",
       "answer-nonprofit": "Evet, kar amacı gütmeyen kuruluşlar ve eğitim kurumları için indirimler sunuyoruz. \nDaha fazla ayrıntı için bizimle iletişime geçin.",
       "answer-payment": "Kredi kartı ödemelerini ve güvenli çevrimini ödemeleri kabul ediyoruz. \nAyrıca aylık veya yıllık ödeme yapmayı da seçebilirsiniz.",
@@ -587,7 +587,7 @@
       "do-you-offer": "Kâr amacı gütmeyen kuruluşlar veya eğitim kurumları için indirimler sunuyor musunuz?",
       "how-does": "Alakart fiyatlandırma nasıl çalışır?",
       "how-is": "Ekipler için fiyatlandırma nasıl hesaplanır?",
-      "is-there": "Relivator ücretsiz bir sürümü var mı?",
+      "is-there": "garden ücretsiz bir sürümü var mı?",
       "what-happens": "Plan sınırlarımı aşarsam ne olur?",
       "what-payment": "Hangi ödeme yöntemlerini kabul ediyorsunuz?"
     }
@@ -601,7 +601,7 @@
     "providerButtonText": "{name} ile Giriş Yap"
   },
   "things": {
-    "heading": "Relivator'unuz",
+    "heading": "garden'unuz",
     "input": {
       "placeholder": "Bir başlık girin",
       "submitButtonText": "Listeye Ekle"
@@ -612,7 +612,7 @@
     },
     "meta": {
       "description": "Kişisel şeylerinizin listesi",
-      "title": "Relivator'unuz"
+      "title": "garden'unuz"
     },
     "signIn": "Bu içeriği görüntülemek için lütfen <link>giriş yapın</link>."
   },
@@ -621,7 +621,7 @@
     "categories": "-",
     "cta": "-",
     "hero": {
-      "title": "Relivator'dan ücretsiz çevrimini araçlar"
+      "title": "garden'dan ücretsiz çevrimini araçlar"
     },
     "title": "Aletler"
   }

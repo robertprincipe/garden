@@ -33,7 +33,7 @@ export async function updateEmailPreferencesAction(
     await resend.emails.send({
       from: env.EMAIL_FROM,
       to: emailPreference.email,
-      subject: "Welcome to Relivator!",
+      subject: "Welcome to garden!",
       react: NewsletterWelcomeEmail({
         firstName: session?.user?.name ?? undefined,
         fromEmail: env.EMAIL_FROM,

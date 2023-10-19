@@ -80,6 +80,10 @@ export function isArrayOfFile(files: unknown): files is File[] {
   return files.every((file) => file instanceof File);
 }
 
+export function isFile(file: unknown): file is File {
+  return file instanceof File;
+}
+
 export function absoluteUrl(path: string) {
   return `${env.NEXT_PUBLIC_APP_URL}${path}`;
 }

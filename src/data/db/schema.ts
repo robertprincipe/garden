@@ -58,12 +58,13 @@ export const users = pgTable(
       .notNull()
       .primaryKey()
       .$defaultFn(() => createId()),
-    provider: text("provider").notNull(),
+    provider: text("provider").default("credentials"),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
     emailVerified: timestamp("emailVerified", { mode: "date" }),
-    email: text("email").default("fake.data@gmail.com"),
-    name: text("name").default("Fake Temp Data Name"),
-    image: text("image").default("https://relivator.bleverse.com/logo.png"),
+    email: text("email").notNull().default("fake.data@gmail.com"),
+    name: text("name").notNull().default("Fake Temp Data Name"),
+    password: text("password").default(":)"),
+    image: text("image").default("https://garden.bleverse.com/logo.png"),
     // !! [STRIPE] =======================================================
     subscriptionPlan: subscriptionEnum("subscription").default("Starter"),
     isSubscribed: boolean("isSubscribed").default(false).notNull(),
@@ -244,7 +245,9 @@ export const todos = pgTable("todo", {
   createdAt: timestamp("createdAt", { withTimezone: true })
     .notNull()
     .defaultNow(),
-  userId: text("userId").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
 });
 
 export const todosRelations = relations(todos, ({ one }) => ({
@@ -287,7 +290,9 @@ export type NewPost = typeof posts.$inferInsert;
 
 export const stores = pgTable("stores", {
   id: serial("id").primaryKey(),
-  userId: text("userId").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   description: text("description"),
   slug: text("slug"),
@@ -402,3 +407,205 @@ export const addresses = pgTable("addresses", {
 
 export type Address = typeof addresses.$inferSelect;
 export type NewAddress = typeof addresses.$inferInsert;
+
+export const categories = pgTable(
+  "categories",
+  {
+    id: serial("id").unique().primaryKey(),
+    name: text("name").notNull(),
+    handle: text("handle").notNull(),
+    image: text("image"),
+    description: text("description"),
+  },
+  (table) => ({
+    handleIdx: index("handle_idx").on(table.handle),
+  }),
+);
+
+export const courses = pgTable(
+  "courses",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    handle: text("handle").notNull().unique(),
+    excerpt: text("excerpt"),
+    thumbnail: json("thumbnail").$type<StoredFile | null>().default(null),
+    description: text("description"),
+    keywords: text("keywords"),
+    price: decimal("price", { precision: 10, scale: 2 }).notNull().default("0"),
+    // compare price
+    compareAtPrice: decimal("compare_at_price", { precision: 10, scale: 2 })
+      .notNull()
+      .default("0"),
+    prerequisites: json("prerequisites").$type<string[] | null>().default(null),
+    goals: json("goals").$type<string[] | null>().default(null),
+    sold: integer("sold").notNull().default(0),
+    published: boolean("published").notNull().default(false),
+    createdAt: timestamp("createdAt").defaultNow(),
+    updatedAt: timestamp("updatedAt"),
+  },
+  (c) => ({
+    titleIdx: index("title_idx").on(c.title),
+    handleIndex: index("handle_idx").on(c.handle),
+  }),
+);
+
+// export const courseSchema = createInsertSchema(courses);
+
+export type Course = typeof courses.$inferSelect;
+export type CreateCourse = typeof courses.$inferInsert;
+
+export const userRelations = relations(users, ({ many }) => ({
+  courses: many(courses),
+}));
+
+export const units = pgTable("units", {
+  id: serial("id").primaryKey(),
+  courseId: integer("course_id").notNull(),
+  title: text("title").notNull(),
+  position: integer("position").notNull().default(0),
+  active: boolean("active").notNull().default(false),
+  createdAt: timestamp("createdAt").defaultNow(),
+});
+
+export type Unit = typeof units.$inferSelect;
+export type NewUnit = typeof units.$inferInsert;
+
+export const categoriesCourses = pgTable("categories_courses", {
+  categoryId: integer("category_id").notNull(),
+  courseId: integer("course_id").notNull(),
+});
+
+export const categoriesRelations = relations(categories, ({ many }) => ({
+  courses: many(categoriesCourses),
+}));
+
+export const courseRelations = relations(courses, ({ one, many }) => ({
+  user: one(users, {
+    fields: [courses.userId],
+    references: [users.id],
+  }),
+  units: many(units),
+  categories: many(categoriesCourses),
+}));
+
+export const coursesCategoriesRelations = relations(
+  categoriesCourses,
+  ({ one }) => ({
+    categories: one(categories, {
+      fields: [categoriesCourses.categoryId],
+      references: [categories.id],
+    }),
+    course: one(courses, {
+      fields: [categoriesCourses.courseId],
+      references: [courses.id],
+    }),
+  }),
+);
+
+export const chapters = pgTable("chapters", {
+  id: serial("id").unique().primaryKey(),
+  unitId: integer("unit_id").notNull(),
+  title: text("title").notNull(),
+  handle: text("handle").unique().notNull(),
+  position: integer("position").notNull().default(0),
+  summary: text("summary"),
+  video: json("video").$type<StoredFile | null>().default(null),
+  length: decimal("length", { precision: 10, scale: 2 }).notNull().default("0"),
+  active: boolean("active").notNull().default(false),
+  createdAt: timestamp("createdAt").defaultNow(),
+});
+
+export const unitRelations = relations(units, ({ many, one }) => ({
+  chapters: many(chapters),
+  course: one(courses, {
+    fields: [units.courseId],
+    references: [courses.id],
+  }),
+}));
+
+export const courseProgress = pgTable("course_progress", {
+  id: serial("id").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  chapterId: integer("chapter_id").notNull(),
+  isCompleted: boolean("is_completed").notNull().default(false),
+  createdAt: timestamp("createdAt").defaultNow(),
+  updatedAt: timestamp("updatedAt"),
+});
+
+export const chapterRelations = relations(chapters, ({ one }) => ({
+  progress: one(courseProgress, {
+    fields: [chapters.id],
+    references: [courseProgress.chapterId],
+  }),
+  unit: one(units, {
+    fields: [chapters.unitId],
+    references: [units.id],
+  }),
+}));
+
+export const interactionEnum = pgEnum("interaction_type", [
+  "comment",
+  "question",
+  "contribution",
+]);
+
+export const interactions = pgTable("interactions", {
+  id: serial("id").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  chapterId: integer("chapter_id").notNull(),
+  parentId: integer("parent_id").notNull(),
+  interactionType: interactionEnum("interaction_type")
+    .notNull()
+    .default("comment"),
+  content: text("content"),
+  createdAt: timestamp("createdAt").defaultNow(),
+});
+
+export const reviews = pgTable("reviews", {
+  id: serial("id").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  courseId: integer("course_id").notNull(),
+  rating: integer("rating").notNull().default(0),
+  content: text("content"),
+  createdAt: timestamp("createdAt").defaultNow(),
+  updatedAt: timestamp("updatedAt"),
+});
+
+export const purchases = pgTable("purchases", {
+  id: serial("id").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  courseId: integer("course_id").notNull(),
+  createdAt: timestamp("createdAt").defaultNow(),
+  updatedAt: timestamp("updatedAt"),
+});
+
+export const notificationEnum = pgEnum("notification_type", [
+  "interaction",
+  "purchase",
+  "mention",
+]);
+
+export const notifications = pgTable("notifications", {
+  id: serial("id").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  notification_type: notificationEnum("notification_type")
+    .notNull()
+    .default("interaction"),
+  content: text("content"),
+  read: boolean("read").notNull().default(false),
+  createdAt: timestamp("createdAt").defaultNow(),
+});

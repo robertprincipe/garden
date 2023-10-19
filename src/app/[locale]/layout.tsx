@@ -69,9 +69,9 @@ export const metadata = seo({
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
-  applicationName: "Bleverse Relivator",
+  applicationName: "Bleverse garden",
   alternates: {
-    canonical: "https://relivator.bleverse.com",
+    canonical: "https://garden.bleverse.com",
   },
   openGraph: {
     type: "website",
@@ -86,7 +86,7 @@ export const metadata = seo({
         url: "/og-image.png",
         width: 1280,
         height: 640,
-        alt: "Bleverse Relivator",
+        alt: "Bleverse garden",
       },
     ],
   },

@@ -59,6 +59,6 @@ export const navLinks = [
   },
   {
     route: "Github",
-    path: "https://github.com/blefnk/relivator",
+    path: "https://github.com/blefnk/garden",
   },
 ];

@@ -2,7 +2,7 @@
 
 [![Join the Bleverse Discord](https://discordapp.com/api/guilds/1075533942096150598/widget.png?style=banner2)][bleverse-discord]
 
-Thank you for considering contributing to Bleverse Relivator.
+Thank you for considering contributing to Bleverse garden.
 As an open sourced project we only exist by contributions from users like you.
 
 To contribute you will first need to fork the repo. To get the repository up and

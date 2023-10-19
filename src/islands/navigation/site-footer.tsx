@@ -1,118 +1,133 @@
-import { siteConfig } from "~/app";
-import { Github, Twitter } from "lucide-react";
-import Link from "next-intl/link";
+"use client";
 
-import { cn } from "~/server/utils";
-import { SubscribeToNewsletterForm } from "~/forms/newsletter-subscribe";
-import { buttonVariants } from "~/islands/primitives/button";
+import { Icon } from "@iconify/react";
+
 import { Shell } from "~/islands/wrappers/shell-variants";
 
-export async function SiteFooter() {
+export function SiteFooter() {
   return (
-    <footer className="w-full border-t bg-background">
-      <Shell as="div">
-        <section
-          id="footer-content"
-          aria-labelledby="footer-content-heading"
-          className="flex flex-col gap-10 lg:flex-row lg:gap-20"
-        >
-          <section
-            id="footer-branding"
-            aria-labelledby="footer-branding-heading"
-            className="space-y-4"
-          >
-            <Link
-              aria-label="Home"
-              href="/"
-              className="flex items-center space-x-2"
-            >
-              <span className="font-bold">{siteConfig.name}</span>
-            </Link>
-          </section>
-          <section
-            id="footer-links"
-            aria-labelledby="footer-links-heading"
-            className="xxs:grid-cols-2 grid flex-1 grid-cols-1 gap-10 sm:grid-cols-4"
-          >
-            {siteConfig.footerNav.map((item) => (
-              <div key={item.title} className="space-y-3">
-                <h4 className="text-base font-medium">{item.title}</h4>
-                <ul className="space-y-3">
-                  {item.items.map((link) => (
-                    <li key={link.title}>
-                      <Link
-                        href={link.href}
-                        target={link?.external ? "_blank" : undefined}
-                        rel={link?.external ? "noreferrer" : undefined}
-                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        {link.title}
-                        <span className="sr-only">{link.title}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </section>
-          <section
-            id="newsletter"
-            aria-labelledby="newsletter-heading"
-            className="space-y-3"
-          >
-            <h4 className="text-base font-medium">
-              Subscribe to our newsletter
-            </h4>
-            <SubscribeToNewsletterForm />
-            <div className="flex items-center space-x-1">
-              <Link
-                href={siteConfig.links.github}
-                target="_blank"
-                rel="noreferrer"
-                className={cn(
-                  buttonVariants({
-                    size: "icon",
-                    variant: "ghost",
-                  }),
-                )}
-              >
-                <Github className="h-4 w-4" aria-hidden="true" />
-                <span className="sr-only">GitHub</span>
-              </Link>
-              <Link
-                href={siteConfig.links.twitter}
-                target="_blank"
-                rel="noreferrer"
-                className={cn(
-                  buttonVariants({
-                    size: "icon",
-                    variant: "ghost",
-                  }),
-                )}
-              >
-                <Twitter className="h-4 w-4" aria-hidden="true" />
-                <span className="sr-only">X (known as Twitter)</span>
-              </Link>
+    <footer className="mx-auto border-t py-6 shadow border-t-border">
+      <Shell className="flex items-stretch flex-col-reverse gap-y-5 md:flex-row md:justify-between">
+        <div className="flex flex-col justify-between md:max-w-sm">
+          <div className="flex h-full items-center justify-between md:flex-col md:items-start">
+            <h2 className="flex items-center space-x-2 text-2xl font-bold md:text-3xl">
+              <Icon icon="ph:potted-plant-duotone" className="text-3xl" />
+              <span className="text-lg font-bold">Garden</span>
+            </h2>
+            <div className="flex items-center space-x-2 md:mb-8">
+              <Icon icon="ph:facebook-logo-duotone" className="text-2xl" />
+              <Icon icon="ph:twitter-logo-duotone" className="text-2xl" />
+              <Icon icon="ph:instagram-logo-duotone" className="text-2xl" />
             </div>
-            <div
-              id="footer-copyright"
-              aria-labelledby="footer-copyright-text"
-              className="flex items-center space-x-4"
-            >
-              <div className="block text-sm text-muted-foreground sm:text-center">
-                © {new Date().getFullYear()}{" "}
-                <Link
-                  target="_blank"
-                  href="https://bleverse.com/"
-                  className="hover:underline"
-                >
-                  {siteConfig.company.name}
-                </Link>
-                . All Rights Reserved.
-              </div>
+          </div>
+          <div className="flex flex-col gap-8">
+            <div className="text-muted-foreground">
+              <p className="mb-2 text-xs font-light">
+                © 2023 Attentive, a product of Attentive Mobile, Inc.
+              </p>
+              <p className="text-xs font-light">
+                221 River Street, Suite 9047, Hoboken, NJ, 07030
+                <a href="mailto:info@attentive.com">info@attentive.com</a>
+              </p>
             </div>
-          </section>
-        </section>
+            <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+              <li>Sitemap</li>
+              <li>Security</li>
+              <li>Privacy Policy</li>
+              <li>Cookie Notice</li>
+              <li>California Notice</li>
+              <li>Terms of Use</li>
+              <li>Content Policy</li>
+            </ul>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:flex">
+          <div className="space-y-4">
+            <div className="space-y-1.5">
+              <h3 className="font-medium">Products</h3>
+              <ul className="text-sm gap-y-1.5 grid">
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Why Attentive
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-1.5">
+              <h3 className="font-medium">Email</h3>
+              <ul className="text-sm gap-y-1.5 grid">
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Email
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-1.5">
+              <h3 className="font-medium">List Management</h3>
+              <ul className="text-sm gap-y-1.5 grid">
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Growth
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Audience Manager
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Analytics
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Attentive AI™
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Marketplace
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Compliance
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Client Strategy
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div className="space-y-1.5">
+              <h3 className="font-medium">Resources</h3>
+              <ul className="text-sm gap-y-1.5 grid">
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Blog
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Texts We Love
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Guides
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Webinars
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Case Studies
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Help Center
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Revenue Calculator
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div className="space-y-1.5">
+              <h3 className="font-medium">Partners</h3>
+              <ul className="text-sm gap-y-1.5 grid">
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Partner With Attentive
+                </li>
+                <li className="text-muted-foreground transition-colors hover:text-foreground">
+                  Browse Partners
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </Shell>
     </footer>
   );

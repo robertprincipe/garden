@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Icon } from "@iconify/react";
 import { siteConfig } from "~/app";
 import { type MainMenuItem } from "~/types";
 import { ActivitySquare } from "lucide-react";
@@ -24,13 +25,9 @@ interface MainMenuProps {
 export function MainMenu({ items }: MainMenuProps) {
   return (
     <div className="hidden gap-6 lg:flex">
-      <Link
-        aria-label="Home"
-        href="/"
-        className="hidden items-center space-x-2 lg:flex"
-      >
-        <ActivitySquare className="h-6 w-6" />
-        <span className="hidden font-bold lg:inline-block font-heading">
+      <Link aria-label="Home" href="/" className="hidden items-center lg:flex">
+        <Icon icon="ph:potted-plant-duotone" className="text-3xl" />
+        <span className="hidden font-bold mt-1 lg:inline-block capitalize">
           {siteConfig.name}
         </span>
       </Link>

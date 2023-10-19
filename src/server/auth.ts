@@ -3,22 +3,24 @@
  * @see https://github.com/jherr/app-router-auth-using-next-auth
  * @see https://github.com/rexfordessilfie/next-auth-account-linking/tree/app-router
  */
-
 import { NextRequest } from "next/server";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { defaultLocale } from "~/i18n/locales";
+import bcrypt from "bcryptjs";
 import { and, eq, isNotNull } from "drizzle-orm";
 import NextAuth, {
   getServerSession,
   NextAuthOptions,
   type AuthOptions,
 } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
 import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { type Provider } from "next-auth/providers/index";
 import { Client } from "postmark";
+import { z } from "zod";
 
 import { signInPagePath } from "~/server/utils";
 import { db } from "~/data/db/client";
@@ -31,7 +33,21 @@ import {
   findAccount,
 } from "~/data/routers/handlers/users";
 
-// const postmark = new Client(env.POSTMARK_API_TOKEN as string);
+export const signInSchema = z.object({
+  email: z.string().email({
+    message: "Please enter a valid email address",
+  }),
+  password: z
+    .string()
+    .min(8, {
+      message: "Password must be at least 8 characters long",
+    })
+    .max(100)
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, {
+      message:
+        "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character",
+    }),
+});
 
 /**
  * Returns a NextAuthOptions object with extended functionality that requires a request and response object
@@ -44,65 +60,43 @@ export const authOptions = () => {
   const extendedOptions: NextAuthOptions = {
     // todo: fix errors when using:
     // adapter: DrizzleAdapter(db),
-
     providers: [
-      GithubProvider({
-        clientId: env.GITHUB_CLIENT_ID!,
-        clientSecret: env.GITHUB_CLIENT_SECRET!,
-      }),
-      DiscordProvider({
-        clientId: env.DISCORD_CLIENT_ID!,
-        clientSecret: env.DISCORD_CLIENT_SECRET!,
+      CredentialsProvider({
+        name: "Credentials",
+        credentials: {
+          email: { label: "Email", type: "email", placeholder: "  " },
+          password: { label: "Password", type: "password" },
+        },
+
+        async authorize(credentials, _) {
+          const { email, password } = signInSchema.parse(credentials);
+
+          const user = await db.query.users.findFirst({
+            where: eq(users.email, email),
+          });
+
+          if (!user) {
+            throw new Error("User not found");
+          }
+
+          if (!user.password) {
+            throw new Error("Password not set");
+          }
+
+          const correct = await bcrypt.compare(password, user.password);
+
+          if (!correct) {
+            return null;
+          }
+
+          return user;
+        },
       }),
       GoogleProvider({
         clientId: env.GOOGLE_CLIENT_ID!,
         clientSecret: env.GOOGLE_CLIENT_SECRET!,
       }),
       // todo: use drizzle auth adapter for this
-      /* EmailProvider({
-        from: process.env.SMTP_FROM,
-        sendVerificationRequest: async ({ identifier, url, provider }) => {
-          const [user] = await db
-            .select()
-            .from(users)
-            .where(
-              and(
-                eq(users.email, identifier),
-                isNotNull(users.emailVerified),
-              ),
-            );
-
-          const templateId = user?.emailVerified
-            ? process.env.POSTMARK_SIGN_IN_TEMPLATE
-            : process.env.POSTMARK_ACTIVATION_TEMPLATE;
-
-          if (!templateId) {
-            throw new Error("Template ID is missing");
-          }
-
-          const result = await postmark.sendEmailWithTemplate({
-            TemplateId: parseInt(templateId),
-            To: identifier,
-            From: provider.from,
-            TemplateModel: {
-              action_url: url,
-              product_name: "Relivator",
-            },
-            Headers: [
-              {
-                // Set this to prevent Gmail from threading emails.
-                // See https://stackoverflow.com/questions/23434110/force-emails-not-to-be-grouped-into-conversations/25435722.
-                Name: "X-Entity-Ref-ID",
-                Value: new Date().getTime() + "",
-              },
-            ],
-          });
-
-          if (result.ErrorCode) {
-            throw new Error(result.Message);
-          }
-        },
-      }), */
     ],
 
     pages: {
