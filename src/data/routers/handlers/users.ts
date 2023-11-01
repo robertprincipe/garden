@@ -5,7 +5,6 @@
  */
 
 import type { Adapter } from "@auth/core/adapters";
-import axios from "axios";
 import { eq } from "drizzle-orm";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
 import { createInsertSchema } from "drizzle-zod";

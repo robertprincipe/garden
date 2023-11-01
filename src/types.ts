@@ -224,6 +224,19 @@ export interface StoredFile {
   url: string;
 }
 
+export interface StoredVideo {
+  id: string;
+  provider: "html5" | "youtube" | "vimeo";
+}
+
+export interface Video {
+  id: string;
+  name: string;
+  url: string;
+  length: number;
+  thumbnail: string;
+}
+
 export interface DataTableSearchableColumn<TData> {
   id: keyof TData;
   title: string;
@@ -271,24 +284,3 @@ export interface UserSubscriptionPlan extends SubscriptionPlan {
   isCanceled: boolean;
   isActive: boolean;
 }
-
-export type Chapter = {
-  id: number;
-  title: string;
-  handle: string;
-  position: number;
-  summary: string;
-  video: StoredFile;
-  length: number;
-  active: boolean;
-  createdAt: Date;
-};
-
-export type Unit = {
-  id: number;
-  title: string;
-  position: number;
-  chapters: Chapter[];
-  active: boolean;
-  createdAt: Date;
-};

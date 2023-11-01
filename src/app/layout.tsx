@@ -7,7 +7,7 @@ import { ReactNode } from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "garden Next.js Starter",
+  title: "Garden",
   description:
     "Next.js 13 ultimate starter with TypeScript, ESLint, Prettier, Absolute Imports, and more.",
 };

@@ -93,11 +93,11 @@ export function catchError(err: unknown) {
     const errors = err.issues.map((issue) => {
       return issue.message;
     });
-    return toast(errors.join("\n"));
+    return toast.error(errors.join("\n"));
   } else if (err instanceof Error) {
-    return toast(err.message);
+    return toast.error(err.message);
   } else {
-    return toast("Something went wrong, please try again later.");
+    return toast.error("Something went wrong, please try again later.");
   }
 }
 
@@ -225,3 +225,32 @@ export const numberToPercent = (number: any) => {
 
   return percent.format(number / 100);
 };
+
+export async function getBlob(url: string) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Network response was not ok");
+  const blob = await res.blob();
+  return blob;
+}
+
+export function createFileFromBlob(blob: Blob, url: string) {
+  const file = new File([blob], url, {
+    type: blob.type,
+  });
+  return file;
+}
+
+export function formatFileSize(bytes?: number) {
+  if (!bytes) {
+    return "0 Bytes";
+  }
+  bytes = Number(bytes);
+  if (bytes === 0) {
+    return "0 Bytes";
+  }
+  const k = 1024;
+  const dm = 2;
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
+}

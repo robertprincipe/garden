@@ -6,12 +6,10 @@
 import { MainMenuItem, type FooterItem } from "~/types";
 
 import { ContentSection, HeroHeader } from "~/server/config/appts";
-import { productCategories } from "~/server/config/products";
 import { networks } from "~/server/config/socials";
-import { slugify } from "~/server/utils";
 
 export const appts = {
-  name: "garden",
+  name: "Garden",
   social: networks({
     youtube: "@bleverse_com",
     discord: "Pb8uKbwpsJ",
@@ -68,45 +66,28 @@ export const settings = {
 };
 
 export const siteConfig = {
-  name: "garden",
-  shortName: "garden",
-  author: "Bleverse",
+  name: "Garden",
+  shortName: "Garden",
+  author: "Robert",
   description:
     "NextJS 13 free starter: store, landing, dashboard. It helps you build great eCommerce and SaaS apps faster than ever. Get it!",
   company: {
-    name: "Bleverse",
-    link: "https://bleverse.com",
-    email: "blefnk@gmail.com",
-    twitter: "@blefnk",
+    name: "make",
+    link: "https://make.com.pe",
+    email: "robert@make.com.pe",
+    twitter: "@adastra_36",
   },
   handles: {
-    twitter: "@blefnk",
+    twitter: "@adastra_36",
   },
   keywords: [
-    "App Router",
-    "Blefonix",
-    "Bleverse",
-    "Drizzle Orm",
-    "Landing Page",
-    "Lemon Squeezy",
-    "Next.js 13.5",
+    "SaaS",
+    "IndieHacker",
     "Nextjs",
+    "Lemon Squeezy",
     "Open Source",
-    "Parallel Routes",
     "PostgreSQL",
-    "Radix Ui",
-    "React",
-    "garden",
-    "Server Actions",
-    "Server Components",
-    "Shadcn/UI",
-    "Starter",
-    "Stripe",
-    "T3 Stack",
     "Tailwind Css",
-    "Template",
-    "Tools",
-    "Utils",
   ],
   url: {
     base: baseUrl,
@@ -136,6 +117,10 @@ export const siteConfig = {
           items: [],
         },
       ],
+    },
+    {
+      title: "Courses",
+      href: "/courses",
     },
   ] satisfies MainMenuItem[],
   links,

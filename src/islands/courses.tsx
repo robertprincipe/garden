@@ -2,10 +2,13 @@
 
 import * as React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Icon } from "~/components/icon";
 import { type Option } from "~/types";
+import { Star } from "lucide-react";
 import Link from "next-intl/link";
 
 import { getRandomPatternStyle } from "~/server/pattern";
+import { formatPrice } from "~/server/utils";
 import { Course, type Product, type Store } from "~/data/db/schema";
 import { useDebounce } from "~/hooks/use-debounce";
 import { ProductCard } from "~/islands/modules/cards/product-card";
@@ -15,7 +18,9 @@ import { CourseCard } from "./modules/cards/course-card";
 import { AspectRatio } from "./primitives/aspect-ratio";
 import {
   Card,
+  CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "./primitives/card";
@@ -151,7 +156,7 @@ export function Courses({
   }, [storeIds]);
 
   return (
-    <section className="flex flex-col space-y-6 lg:col-span-2" {...props}>
+    <section className="flex flex-col space-y-6 xl:col-span-5" {...props}>
       {!isPending && !products.length ? (
         <div className="mx-auto flex max-w-xs flex-col space-y-1.5">
           <h1 className="text-center text-2xl font-bold">No products found</h1>
@@ -160,7 +165,7 @@ export function Courses({
           </p>
         </div>
       ) : null}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:col-span-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 xl:col-span-5">
         {products.map((course) => (
           <Link
             key={course.id}
@@ -168,8 +173,8 @@ export function Courses({
             href={`/courses/${course.handle}`}
           >
             <Card className="h-full overflow-hidden">
-              <AspectRatio ratio={21 / 9}>
-                <div className="absolute inset-0 bg-gradient-to-t from-transparent to-zinc-950/20" />
+              <AspectRatio ratio={16 / 9}>
+                <div className="absolute inset-0" />
 
                 <div
                   className="h-full rounded-t-md"
@@ -185,8 +190,9 @@ export function Courses({
                   }
                 />
               </AspectRatio>
-              <CardHeader>
-                <CardTitle className="line-clamp-1 text-lg">
+
+              <CardContent className="p-3 pt-3">
+                <CardTitle className="line-clamp-1 text-base">
                   {course.title}
                 </CardTitle>
                 {course.excerpt ? (
@@ -194,7 +200,19 @@ export function Courses({
                     {course.excerpt}
                   </CardDescription>
                 ) : null}
-              </CardHeader>
+              </CardContent>
+              <CardFooter className="px-3 pb-3 text-sm font-medium flex justify-between items-center">
+                <div className="flex items-center gap-x-1">
+                  <span>4.7</span>
+                  <Icon icon="ph:star-duotone" className="w-4 h-4" />
+                </div>
+                <div className="flex gap-x-1 items-center">
+                  <span>{formatPrice(course.price)}</span>
+                  <span className="text-muted-foreground line-through text-xs">
+                    {formatPrice(course.compareAtPrice)}
+                  </span>
+                </div>
+              </CardFooter>
             </Card>
           </Link>
         ))}

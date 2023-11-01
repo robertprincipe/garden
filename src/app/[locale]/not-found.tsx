@@ -9,7 +9,7 @@ export default function NotFound() {
   return (
     <main className="bg-background text-foreground antialiased">
       <div className="duration-really-slow container grid min-h-screen place-content-center text-center animate-in fade-in">
-        <h1 className={typography.h1}>Sadly! Page not found! 🫠</h1>
+        <h1 className={typography.h1}>Sadly! Page not found! 😟</h1>
         <Balancer
           as="p"
           className="mx-auto mt-4 !block leading-normal text-muted-foreground sm:text-lg sm:leading-7"

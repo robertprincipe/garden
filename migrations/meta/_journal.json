@@ -36,6 +36,20 @@
       "when": 1697345008424,
       "tag": "0004_exotic_maelstrom",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1697928049074,
+      "tag": "0005_right_captain_marvel",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1698372347542,
+      "tag": "0006_brown_the_renegades",
+      "breakpoints": true
     }
   ]
 }

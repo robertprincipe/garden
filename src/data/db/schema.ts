@@ -10,11 +10,13 @@
 
 import type { AdapterAccount } from "@auth/core/adapters";
 import { createId } from "@paralleldrive/cuid2";
-import type { CartItem, CheckoutItem, StoredFile } from "~/types";
+import type { CartItem, CheckoutItem, StoredFile, StoredVideo } from "~/types";
 import { relations } from "drizzle-orm";
 import {
+  AnyPgColumn,
   boolean,
   decimal,
+  foreignKey,
   index,
   integer,
   json,
@@ -27,6 +29,7 @@ import {
   timestamp,
   unique,
   uniqueIndex,
+  uuid,
 } from "drizzle-orm/pg-core";
 import Stripe from "stripe";
 
@@ -408,10 +411,15 @@ export const addresses = pgTable("addresses", {
 export type Address = typeof addresses.$inferSelect;
 export type NewAddress = typeof addresses.$inferInsert;
 
+// LMS schema
+
 export const categories = pgTable(
   "categories",
   {
-    id: serial("id").unique().primaryKey(),
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
     name: text("name").notNull(),
     handle: text("handle").notNull(),
     image: text("image"),
@@ -425,7 +433,10 @@ export const categories = pgTable(
 export const courses = pgTable(
   "courses",
   {
-    id: serial("id").primaryKey(),
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
     userId: text("userId")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
@@ -463,16 +474,18 @@ export const userRelations = relations(users, ({ many }) => ({
 }));
 
 export const units = pgTable("units", {
-  id: serial("id").primaryKey(),
-  courseId: integer("course_id").notNull(),
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  courseId: text("course_id")
+    .notNull()
+    .references(() => courses.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
   position: integer("position").notNull().default(0),
   active: boolean("active").notNull().default(false),
   createdAt: timestamp("createdAt").defaultNow(),
 });
-
-export type Unit = typeof units.$inferSelect;
-export type NewUnit = typeof units.$inferInsert;
 
 export const categoriesCourses = pgTable("categories_courses", {
   categoryId: integer("category_id").notNull(),
@@ -507,13 +520,18 @@ export const coursesCategoriesRelations = relations(
 );
 
 export const chapters = pgTable("chapters", {
-  id: serial("id").unique().primaryKey(),
-  unitId: integer("unit_id").notNull(),
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  unitId: text("unit_id")
+    .notNull()
+    .references(() => units.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
-  handle: text("handle").unique().notNull(),
+  handle: text("handle").notNull(),
   position: integer("position").notNull().default(0),
   summary: text("summary"),
-  video: json("video").$type<StoredFile | null>().default(null),
+  video: json("video").$type<StoredVideo | null>().default(null),
   length: decimal("length", { precision: 10, scale: 2 }).notNull().default("0"),
   active: boolean("active").notNull().default(false),
   createdAt: timestamp("createdAt").defaultNow(),
@@ -528,11 +546,16 @@ export const unitRelations = relations(units, ({ many, one }) => ({
 }));
 
 export const courseProgress = pgTable("course_progress", {
-  id: serial("id").primaryKey(),
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  chapterId: integer("chapter_id").notNull(),
+  chapterId: text("chapter_id")
+    .notNull()
+    .references(() => chapters.id, { onDelete: "cascade" }),
   isCompleted: boolean("is_completed").notNull().default(false),
   createdAt: timestamp("createdAt").defaultNow(),
   updatedAt: timestamp("updatedAt"),
@@ -555,26 +578,64 @@ export const interactionEnum = pgEnum("interaction_type", [
   "contribution",
 ]);
 
-export const interactions = pgTable("interactions", {
-  id: serial("id").primaryKey(),
-  userId: text("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  chapterId: integer("chapter_id").notNull(),
-  parentId: integer("parent_id").notNull(),
-  interactionType: interactionEnum("interaction_type")
-    .notNull()
-    .default("comment"),
-  content: text("content"),
-  createdAt: timestamp("createdAt").defaultNow(),
-});
+export const interactions = pgTable(
+  "interactions",
+  {
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    chapterId: text("chapter_id")
+      .notNull()
+      .references(() => chapters.id, { onDelete: "cascade" }),
+    parentId: text("parent_id").references((): AnyPgColumn => interactions.id, {
+      onDelete: "cascade",
+    }),
+    interactionType: interactionEnum("interaction_type")
+      .notNull()
+      .default("comment"),
+    content: text("content").notNull(),
+    createdAt: timestamp("createdAt").defaultNow(),
+  },
+  (table) => {
+    return {
+      parentReference: foreignKey({
+        columns: [table.parentId],
+        foreignColumns: [table.id],
+      }),
+    };
+  },
+);
+
+export const interactionRelations = relations(interactions, ({ one }) => ({
+  user: one(users, {
+    fields: [interactions.userId],
+    references: [users.id],
+  }),
+  chapter: one(chapters, {
+    fields: [interactions.chapterId],
+    references: [chapters.id],
+  }),
+  parent: one(interactions, {
+    fields: [interactions.parentId],
+    references: [interactions.id],
+  }),
+}));
 
 export const reviews = pgTable("reviews", {
-  id: serial("id").primaryKey(),
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  courseId: integer("course_id").notNull(),
+  courseId: text("course_id")
+    .notNull()
+    .references(() => courses.id, { onDelete: "cascade" }),
   rating: integer("rating").notNull().default(0),
   content: text("content"),
   createdAt: timestamp("createdAt").defaultNow(),
@@ -582,11 +643,16 @@ export const reviews = pgTable("reviews", {
 });
 
 export const purchases = pgTable("purchases", {
-  id: serial("id").primaryKey(),
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  courseId: integer("course_id").notNull(),
+  courseId: text("course_id")
+    .notNull()
+    .references(() => courses.id, { onDelete: "cascade" }),
   createdAt: timestamp("createdAt").defaultNow(),
   updatedAt: timestamp("updatedAt"),
 });
@@ -598,11 +664,14 @@ export const notificationEnum = pgEnum("notification_type", [
 ]);
 
 export const notifications = pgTable("notifications", {
-  id: serial("id").primaryKey(),
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  notification_type: notificationEnum("notification_type")
+  notificationType: notificationEnum("notification_type")
     .notNull()
     .default("interaction"),
   content: text("content"),

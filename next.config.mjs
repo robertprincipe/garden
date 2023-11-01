@@ -43,7 +43,6 @@ const nextConfig = {
    * Toggle experimental features.
    */
   experimental: {
-    serverActions: true,
     mdxRs: true,
   },
   /**

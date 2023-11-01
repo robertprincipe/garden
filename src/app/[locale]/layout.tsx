@@ -6,10 +6,7 @@
 import "~/styles/globals.css";
 
 import { PropsWithChildren } from "react";
-import {
-  Playfair_Display as FontHeading,
-  Inter as FontSans,
-} from "next/font/google";
+import { Oswald as FontHeading, Inter as FontSans } from "next/font/google";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { siteConfig } from "~/app";
 import { defaultLocale, locales } from "~/i18n/locales";
@@ -21,6 +18,7 @@ import { cn } from "~/server/utils";
 import { seo } from "~/data/meta";
 import { fullURL } from "~/data/meta/builder";
 import LoglibAnalytics from "~/islands/loglib-analytics";
+import ToasterConfig from "~/islands/modules/toaster";
 import { SiteFooter } from "~/islands/navigation/site-footer";
 import { SiteHeader } from "~/islands/navigation/site-header";
 import { TooltipProvider } from "~/islands/primitives/tooltip";
@@ -29,7 +27,7 @@ import { NextIntlProvider } from "~/islands/providers/nextintl-provider";
 import NextAuthProvider from "~/islands/providers/session-provider";
 import { NextThemesProvider } from "~/islands/providers/theme-provider";
 import { ToasterNotifier } from "~/islands/wrappers/toaster";
-import TrpcQueryProvider from "~/islands/wrappers/trpc/trpc-query-provider";
+import { QueryProvider } from "~/islands/wrappers/trpc/query-provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -39,7 +37,7 @@ const fontSans = FontSans({
 const fontHeading = FontHeading({
   subsets: ["latin"],
   variable: "--font-heading",
-  weight: "500",
+  weight: "400",
 });
 
 /**
@@ -55,7 +53,7 @@ export const metadata = seo({
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
-  viewport: "width=device-width, initial-scale=1",
+  viewport: { width: "device-width", initialScale: 1 },
   creator: siteConfig.author,
   publisher: "Bleverse",
   authors: [
@@ -139,17 +137,18 @@ export default async function LocaleLayout({
         <NextIntlProvider locale={locale} messages={messages}>
           <NextAuthProvider session={session}>
             <NextThemesProvider>
-              <TrpcQueryProvider>
+              <QueryProvider>
                 <TooltipProvider>
                   <SiteHeader />
                   {children}
                   <SiteFooter />
+                  <ToasterConfig />
                 </TooltipProvider>
                 <TailwindIndicator />
                 <ToasterNotifier />
                 <LoglibAnalytics />
                 <VercelAnalytics />
-              </TrpcQueryProvider>
+              </QueryProvider>
             </NextThemesProvider>
           </NextAuthProvider>
         </NextIntlProvider>

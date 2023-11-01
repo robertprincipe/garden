@@ -48,6 +48,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const product = await db.query.courses.findFirst({
     where: eq(courses.handle, productId),
+    with: {
+      units: {
+        with: {
+          chapters: true,
+        },
+      },
+    },
   });
 
   if (!product) {
@@ -148,42 +155,55 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
           </div>
 
-          <div className="mt-5">
-            <h3 className="mb-4 text-2xl font-bold">Metas</h3>
-            <ul className="space-y-2 text-heavy-metal-700 md:columns-2">
-              <li className="flex items-center space-x-1.5">
-                <Icon icon="ph:target-bold" className="text-xl" />{" "}
-                <span>Ganar mucho dinero</span>
-              </li>
-              <li className="flex items-center space-x-1.5">
-                <Icon icon="ph:target-bold" className="text-xl" />
-                <span>Poder hablar facilmente con las personas</span>
-              </li>
-              <li className="flex items-center space-x-1.5">
-                <Icon icon="ph:target-bold" className="text-xl" />
-                <span>Siempre verme confiado</span>
-              </li>
-            </ul>
-          </div>
-          <div className="prose prose-zinc mt-3 max-w-none dark:prose-invert">
-            <h2>Curso de Prompt Engineer</h2>
-            <p>
-              Este curso te enseñará cómo construir modelos de lenguaje que
-              puedan generar texto, traducir idiomas, escribir diferentes tipos
-              de contenido creativo y responder a tus preguntas de forma
-              informativa. Aprenderás los fundamentos de la inteligencia.
-            </p>
-          </div>
+          {product.goals ? (
+            <div className="mt-5">
+              <h3 className="mb-4 text-2xl font-bold">Metas</h3>
+              <ul className="space-y-2 text-heavy-metal-700 md:columns-2">
+                {product.goals.map((goal) => (
+                  <li
+                    className="flex items-center space-x-1.5 text-muted-foreground"
+                    key={goal}
+                  >
+                    <Icon icon="ph:target-bold" className="text-xl" />{" "}
+                    <span>{goal}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          {product.prerequisites ? (
+            <div className="mt-5">
+              <h3 className="mb-4 text-2xl font-bold">Requisitos</h3>
+              <ul className="space-y-2 text-heavy-metal-700 md:columns-2">
+                {product.prerequisites.map((goal) => (
+                  <li
+                    className="flex items-center space-x-1.5 text-muted-foreground"
+                    key={goal}
+                  >
+                    <Icon icon="ph:seal-warning-bold" className="text-xl" />{" "}
+                    <span>{goal}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          <div
+            className="prose prose-zinc mt-3 max-w-none dark:prose-invert"
+            dangerouslySetInnerHTML={{ __html: product.description ?? "" }}
+          />
           <div className="mb-6">
             <h3 className="mb-4 mt-6 text-2xl font-bold">Temario del curso</h3>
             <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="description">
-                <AccordionTrigger>Description</AccordionTrigger>
-                <AccordionContent>
-                  {product.description ??
-                    "No description is available for this product."}
-                </AccordionContent>
-              </AccordionItem>
+              {product.units.map((unit) => (
+                <AccordionItem value={unit.id} key={unit.id}>
+                  <AccordionTrigger>{unit.title}</AccordionTrigger>
+                  <AccordionContent>
+                    {unit.chapters.map((chapter) => (
+                      <div key={chapter.id}>{chapter.title}</div>
+                    ))}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
             </Accordion>
           </div>
         </div>
@@ -241,7 +261,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </span>
             </div>
             <div className="flex items-center justify-between space-x-2">
-              <div className="font-medium text-secondary-foreground">
+              <div className="font-medium text-muted-foreground">
                 420 estudiantes
               </div>
               <div className="flex items-center space-x-1">

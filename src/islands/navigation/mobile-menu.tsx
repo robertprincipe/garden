@@ -56,38 +56,54 @@ export function MobileMenu({
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           <div className="pl-1 pr-7">
             <Accordion type="single" collapsible className="w-full">
-              {MainMenuItems?.map((item, index) => (
-                <AccordionItem value={item.title} key={index}>
-                  <AccordionTrigger className="text-sm capitalize">
+              {MainMenuItems?.map((item, index) =>
+                item.items ? (
+                  <AccordionItem
+                    value={item.title}
+                    key={index}
+                    className="border-b-0"
+                  >
+                    <AccordionTrigger className="text-sm capitalize">
+                      {item.title}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-col space-y-2">
+                        {item.items?.map((subItem, index) =>
+                          subItem.href ? (
+                            <MobileLink
+                              key={index}
+                              href={String(subItem.href)}
+                              pathname={pathname}
+                              setIsOpen={setIsOpen}
+                              disabled={subItem.disabled}
+                            >
+                              {subItem.title}
+                            </MobileLink>
+                          ) : (
+                            <div
+                              key={index}
+                              className="text-foreground/70 transition-colors"
+                            >
+                              {item.title}
+                            </div>
+                          ),
+                        )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ) : (
+                  <MobileLink
+                    key={index}
+                    href={String(item.href)}
+                    pathname={pathname}
+                    setIsOpen={setIsOpen}
+                    isParent
+                  >
                     {item.title}
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="flex flex-col space-y-2">
-                      {item.items?.map((subItem, index) =>
-                        subItem.href ? (
-                          <MobileLink
-                            key={index}
-                            href={String(subItem.href)}
-                            pathname={pathname}
-                            setIsOpen={setIsOpen}
-                            disabled={subItem.disabled}
-                          >
-                            {subItem.title}
-                          </MobileLink>
-                        ) : (
-                          <div
-                            key={index}
-                            className="text-foreground/70 transition-colors"
-                          >
-                            {item.title}
-                          </div>
-                        ),
-                      )}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-              <AccordionItem value="sidebar">
+                  </MobileLink>
+                ),
+              )}
+              <AccordionItem value="sidebar" className="border-b-0">
                 <AccordionTrigger className="text-sm">
                   Sidebar Menu
                 </AccordionTrigger>
@@ -128,6 +144,7 @@ interface MobileLinkProps {
   children?: React.ReactNode;
   href: string | null;
   disabled?: boolean;
+  isParent?: boolean;
   pathname: string | null;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -137,6 +154,7 @@ function MobileLink({
   href,
   disabled,
   pathname,
+  isParent,
   setIsOpen,
 }: MobileLinkProps) {
   return (
@@ -145,6 +163,7 @@ function MobileLink({
       className={cn(
         "text-foreground/70 transition-colors hover:text-foreground",
         pathname === href && "text-foreground",
+        isParent && "font-medium text-white hover:underline text-sm",
         disabled && "pointer-events-none opacity-60",
       )}
       onClick={() => setIsOpen(false)}

@@ -96,10 +96,7 @@ export function MainMenu({ items }: MainMenuProps) {
                   <NavigationMenuItem key={item.title}>
                     <Link href={item.href} legacyBehavior passHref>
                       <NavigationMenuLink
-                        className={cn(
-                          navigationMenuTriggerStyle(),
-                          "font-heading h-auto",
-                        )}
+                        className={cn(navigationMenuTriggerStyle(), "h-auto")}
                       >
                         {item.title}
                       </NavigationMenuLink>

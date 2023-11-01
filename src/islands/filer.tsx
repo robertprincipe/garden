@@ -19,7 +19,7 @@ import "cropperjs/dist/cropper.css";
 
 import Image from "next/image";
 
-import { cn, formatBytes } from "~/server/utils";
+import { catchError, cn, formatBytes } from "~/server/utils";
 import { Icons } from "~/islands/icons";
 import { Button } from "~/islands/primitives/button";
 import {
@@ -179,11 +179,13 @@ function CropperCard({ file, setFile }: ICropperCardProps) {
 
   const urlToFile = () => {
     if (typeof file === "string") {
-      getBlob(imageUrl).then((blob) => {
-        const file = createFileFromBlob(blob, imageUrl);
+      getBlob(imageUrl)
+        .then((blob) => {
+          const file = createFileFromBlob(blob, imageUrl);
 
-        setFile(file);
-      });
+          setFile(file);
+        })
+        .catch((err) => catchError(err));
     }
 
     setIsOpen(true);

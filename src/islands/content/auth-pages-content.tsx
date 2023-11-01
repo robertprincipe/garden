@@ -8,7 +8,6 @@ import React, {
   type HTMLAttributes,
 } from "react";
 import { useSearchParams } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { appts, siteConfig } from "~/app";
 import { Loader2, MailIcon } from "lucide-react";
 import {
@@ -20,18 +19,15 @@ import {
 } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Link from "next-intl/link";
-import { useForm } from "react-hook-form";
-import { FaDiscord, FaGithub, FaGoogle } from "react-icons/fa";
-import { Balancer } from "react-wrap-balancer";
+import { FaGoogle } from "react-icons/fa";
 import { cnBase } from "tailwind-variants";
-import { type z } from "zod";
 
 import { typography } from "~/server/text";
 import { catchAuthError, cls, cn } from "~/server/utils";
 import { IAccount, IUser } from "~/data/routers/handlers/users";
-import { userAuthSchema } from "~/data/validations/user";
 import { useToast } from "~/hooks/use-toast-2";
-import { Spinner } from "~/islands/modules/spinner";
+import { SignInForm } from "~/forms/sign-in-form";
+import { SignUpForm } from "~/forms/sign-up-form";
 import { Button, buttonVariants } from "~/islands/primitives/button";
 import {
   Card,
@@ -40,17 +36,8 @@ import {
   CardFooter,
   CardHeader,
 } from "~/islands/primitives/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-} from "~/islands/primitives/form";
-import { Input } from "~/islands/primitives/input";
 import { Separator } from "~/islands/primitives/separator";
 import { Shell } from "~/islands/wrappers/shell-variants";
-
-type FormData = z.infer<typeof userAuthSchema>;
 
 type AuthPageContentProps = HTMLAttributes<HTMLDivElement> & {
   providers?: Record<string, ClientSafeProvider> | null;
@@ -77,20 +64,11 @@ export default function AuthPageContent({
 
   const searchParams = useSearchParams();
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof userAuthSchema>>({
-    resolver: zodResolver(userAuthSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
 
-  const isLoading = useMemo(
-    () => form.formState.isSubmitting,
-    [form.formState.isSubmitting],
+  const credentialsProvider = useMemo(
+    () => providers?.credentials,
+    [providers],
   );
-
-  const emailProvider = useMemo(() => providers?.credentials, [providers]);
   const oauthProviders = useMemo(
     () =>
       Object.values(providers ?? {}).filter(
@@ -115,39 +93,6 @@ export default function AuthPageContent({
   /**
    * todo: Handle the form submission.
    */
-  const onSubmit = useCallback(
-    async (data: FormData) => {
-      let signInResult: SignInResponse | undefined;
-
-      if (isLoading) {
-        return;
-      }
-
-      try {
-        signInResult = await signIn("credentials", {
-          email: data.email.trim().toLowerCase(),
-          password: data.password,
-          callbackUrl: searchParams?.get("from") ?? "/",
-        });
-      } catch (err) {
-        console.error(err);
-      }
-
-      if (!signInResult?.ok || signInResult.error) {
-        return toast({
-          ...catchAuthError(signInResult?.error),
-          variant: "destructive",
-        });
-      }
-
-      // return toast({
-      //   title: "Check your email",
-      //   description:
-      //     "We sent you a login link. Be sure to check your spam too.",
-      // });
-    },
-    [isLoading, searchParams, toast],
-  );
 
   const handleSignIn = (provider: string) => {
     signIn(provider);
@@ -161,7 +106,7 @@ export default function AuthPageContent({
     {
       id: "google",
       name: "Google",
-      Component: <FaGoogle size={24} />,
+      Component: <FaGoogle size={20} />,
     },
   ];
 
@@ -192,7 +137,8 @@ export default function AuthPageContent({
   return (
     <Shell
       className={cls(
-        "flex flex-col max-w-xl justify-center container -mt-14 lg:max-w-none lg:grid-cols-2 lg:px-0 sm:max-w-lg self-center min-h-screen items-center",
+        "flex flex-col max-w-xl justify-center container lg:grid-cols-2 lg:px-0 sm:max-w-lg self-center min-h-screen items-center",
+        isAuthenticated ? "lg:max-w-5xl" : "lg:max-w-lg",
         className,
       )}
       {...props}
@@ -226,11 +172,8 @@ export default function AuthPageContent({
               {!isAuthenticated && (
                 <>
                   <div>
-                    <div className="space-y-8">
-                      <Balancer
-                        as="p"
-                        className="mx-auto px-8 text-center mt-8 lg:mt-0 text-sm !block leading-normal text-muted-foreground sm:text-lg sm:leading-7"
-                      >
+                    <div className="space-y-4">
+                      <p className="mx-auto mt-4 lg:mt-0 !block leading-normal text-muted-foreground sm:leading-7">
                         {isRegPage && (
                           <>
                             {t("RegisterForm.description")}{" "}
@@ -255,119 +198,24 @@ export default function AuthPageContent({
                             </Link>
                           </>
                         )}
-                      </Balancer>
+                      </p>
 
-                      {emailProvider ? (
+                      {credentialsProvider ? (
                         <>
-                          <Form {...form}>
-                            <form
-                              onSubmit={(...args) =>
-                                void form.handleSubmit(onSubmit)(...args)
-                              }
-                              className="flex flex-col space-y-2"
-                            >
-                              <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormControl>
-                                      <Input
-                                        placeholder="name@example.com"
-                                        {...field}
-                                      />
-                                    </FormControl>
-                                  </FormItem>
-                                )}
-                              />
-
-                              <div className="bg-card">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ipsum, deserunt.
-                              </div>
-
-                              <div className="bg-secondary">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ipsum, deserunt.
-                              </div>
-
-                              <div className="bg-primary">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ipsum, deserunt.
-                              </div>
-
-                              <div className="bg-muted">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ipsum, deserunt.
-                              </div>
-
-                              <div className="bg-accent">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ipsum, deserunt.
-                              </div>
-
-                              <div className="bg-ring">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ipsum, deserunt.
-                              </div>
-
-                              <div className="bg-input">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ipsum, deserunt.
-                              </div>
-
-                              <div className="bg-border">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ipsum, deserunt.
-                              </div>
-
-                              <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormControl>
-                                      <Input
-                                        placeholder="********"
-                                        {...field}
-                                      />
-                                    </FormControl>
-                                  </FormItem>
-                                )}
-                              />
-
-                              <Button
-                                variant="default"
-                                type="submit"
-                                disabled={isLoading}
-                                className="w-full"
-                              >
-                                {form.formState.isSubmitting ? (
-                                  <Spinner className="mr-2 h-4 w-4" />
-                                ) : (
-                                  <MailIcon className="mr-2 h-4 w-4" />
-                                )}
-                                Sign In with Email
-                              </Button>
-
-                              <Link
-                                aria-label="Reset password"
-                                href="/sign-in/reset-password"
-                                className="text-sm text-primary underline-offset-4 transition-colors hover:underline"
-                              >
-                                Reset password
-                              </Link>
-                            </form>
-                          </Form>
+                          {isRegPage ? <SignUpForm /> : <SignInForm />}
 
                           {oauthProviders.length ? (
-                            <div className="">
-                              <div className="inset-0 flex items-center">
+                            <div className="relative">
+                              <div className="absolute inset-0 flex items-center">
                                 <span className="w-full border-t" />
                               </div>
-                              <div className="flex justify-center text-xs uppercase">
-                                <span className="bg-background px-2">
-                                  Or continue with
+                              <div className="relative flex justify-center text-xs uppercase">
+                                <span className="bg-card px-2 text-muted-foreground">
+                                  {isAuthenticated
+                                    ? `${t("auth.other-options")}`
+                                    : isRegPage
+                                    ? `${t("RegisterForm.other-options")}`
+                                    : `${t("LoginForm.other-options")}`}
                                 </span>
                               </div>
                             </div>
@@ -378,19 +226,6 @@ export default function AuthPageContent({
                       ) : (
                         <></>
                       )}
-
-                      <h2
-                        className={cnBase(
-                          typography.h2,
-                          "text-center mb-2 text-lg text-zinc-800 dark:text-zinc-300",
-                        )}
-                      >
-                        {isAuthenticated
-                          ? `${t("auth.other-options")}`
-                          : isRegPage
-                          ? `${t("RegisterForm.other-options")}`
-                          : `${t("LoginForm.other-options")}`}
-                      </h2>
                     </div>
                   </div>
                 </>
@@ -398,12 +233,9 @@ export default function AuthPageContent({
 
               {isAuthenticated && (
                 <>
-                  <Balancer
-                    as="p"
-                    className="mx-auto mt-4 !block leading-normal text-muted-foreground sm:text-lg sm:leading-7"
-                  >
+                  <p className="mx-auto mt-4 !block leading-normal text-muted-foreground sm:text-lg sm:leading-7">
                     {t("auth-pages-content.description")}
-                  </Balancer>
+                  </p>
                 </>
               )}
 
@@ -428,7 +260,7 @@ export default function AuthPageContent({
                             handleSignIn(provider.id);
                           } else return null;
                         }}
-                        className={`transition max-w-lg duration-400 flex-1 text-lg px-4 py-5 rounded-full shadow-md font-medium  dark:bg-zinc-900 dark:text-zinc-300 flex gap-3 items-center bg-zinc-50 text-zinc-900 ${
+                        className={`transition duration-400 flex-1 text-lg px-4 py-5 shadow-md font-medium flex gap-1 items-center bg-muted text-accent-foreground hover:text-muted-foreground ${
                           isProviderLoading ? "animate-opacity" : ""
                         } ${isLinked ? "opacity-50 cursor-not-allowed" : ""}`}
                       >
@@ -441,6 +273,10 @@ export default function AuthPageContent({
                         ) : (
                           <>
                             {provider.Component && provider.Component}
+                            {/* <img
+                              src="https://www.kaggle.com/static/images/google-signin/g-logo.svg"
+                              alt=""
+                            /> */}
                             <span className="font-semibold">
                               {provider.name}
                             </span>
@@ -464,39 +300,41 @@ export default function AuthPageContent({
                     ))}
                   </div>
                   <Separator className="my-8" />
-                  <Link
-                    href="/dashboard/stores"
-                    className={cn(
-                      buttonVariants({ variant: "default" }),
-                      "mr-2 px-3",
-                    )}
-                  >
-                    🪪 Dashboard
-                  </Link>
-                  <Link
-                    href="/"
-                    className={cn(
-                      buttonVariants({ variant: "default" }),
-                      "mr-2 px-3",
-                    )}
-                  >
-                    🏠 Home Page
-                  </Link>
-                  <Button
-                    variant="outline"
-                    disabled={isProviderLoading}
-                    className="p-4 rounded-md shadow-md font-medium"
-                    onClick={handleSignOut}
-                  >
-                    {isProviderLoading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
-                        {t("LoginForm.wait")}
-                      </>
-                    ) : (
-                      <>🔐 {t("auth-pages-content.sign-out")}</>
-                    )}
-                  </Button>
+                  <div className="grid gap-2">
+                    <Link
+                      href="/dashboard/stores"
+                      className={cn(
+                        buttonVariants({ variant: "default" }),
+                        "px-3",
+                      )}
+                    >
+                      🪪 Dashboard
+                    </Link>
+                    <Link
+                      href="/"
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "px-3",
+                      )}
+                    >
+                      🏠 Home Page
+                    </Link>
+                    <Button
+                      variant="destructive"
+                      disabled={isProviderLoading}
+                      className="p-4 rounded-md shadow-md font-medium"
+                      onClick={handleSignOut}
+                    >
+                      {isProviderLoading ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+                          {t("LoginForm.wait")}
+                        </>
+                      ) : (
+                        <>🔐 {t("auth-pages-content.sign-out")}</>
+                      )}
+                    </Button>
+                  </div>
                 </div>
               )}
             </div>

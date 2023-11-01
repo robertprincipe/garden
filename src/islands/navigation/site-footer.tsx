@@ -9,7 +9,7 @@ export function SiteFooter() {
     <footer className="mx-auto border-t py-6 shadow border-t-border">
       <Shell className="flex items-stretch flex-col-reverse gap-y-5 md:flex-row md:justify-between">
         <div className="flex flex-col justify-between md:max-w-sm">
-          <div className="flex h-full items-center justify-between md:flex-col md:items-start">
+          <div className="flex h-full items-center justify-between md:flex-col md:items-start mb-8 md:mb-0">
             <h2 className="flex items-center space-x-2 text-2xl font-bold md:text-3xl">
               <Icon icon="ph:potted-plant-duotone" className="text-3xl" />
               <span className="text-lg font-bold">Garden</span>

@@ -32,6 +32,7 @@ import { buttonVariants } from "~/islands/primitives/button";
 import CommonSection from "~/islands/sections/common-section";
 import FeaturesSection from "~/islands/sections/features-section";
 import GeneralShell from "~/islands/wrappers/general-shell";
+import { Shell } from "~/islands/wrappers/shell-variants";
 
 import Features from "./features";
 
@@ -76,18 +77,25 @@ export default async function HomePage() {
     .orderBy(desc(stores.stripeAccountId), desc(sql<number>`count(*)`));
 
   return (
-    <GeneralShell>
+    <Shell className="container gap-12">
       <section className="mx-auto flex w-full flex-col items-start md:items-center gap-4 pb-4 pt-2 md:pb-8 md:pt-6 lg:py-10 md:flex-row">
         <div>
           <h1 className="text-3xl font-heading leading-tight tracking-tighter md:text-4xl lg:text-5xl lg:leading-[1.1]">
-            <Balancer>Level up with the largest AI & ML community</Balancer>
+            <Balancer>
+              Level up with the largest{" "}
+              <span className="text-transparent bg-gradient-to-r from-blue-500 via-purple-600 to-green-500 bg-clip-text">
+                AI & ML community
+              </span>
+            </Balancer>
           </h1>
 
           <p className="my-4 md:max-w-md text-muted-foreground">
-            Join over 15M+ machine learners to share, stress test, and stay
-            up-to-date on all the latest ML techniques and technologies.
-            Discover a huge repository of community-published models, data &
-            code for your next project.
+            <Balancer>
+              Join over 15M+ machine learners to share, stress test, and stay
+              up-to-date on all the latest ML techniques and technologies.
+              Discover a huge repository of community-published models, data &
+              code for your next project.
+            </Balancer>
           </p>
           <div className="flex lg:flex-row flex-col gap-2">
             <a
@@ -322,7 +330,7 @@ export default async function HomePage() {
       {/* <OssRepoSection githubStars={githubStars} /> */}
       <FeaturesSection />
       {/* <CommonSection /> */}
-    </GeneralShell>
+    </Shell>
   );
 }
 

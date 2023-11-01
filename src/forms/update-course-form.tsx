@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { generateReactHelpers } from "@uploadthing/react/hooks";
-import { FileWithPreview } from "~/types";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { type z } from "zod";
@@ -14,11 +13,12 @@ import {
   deleteCourseAction,
   updateCourseAction,
 } from "~/server/actions/course";
-import { catchError, isArrayOfFile, isFile } from "~/server/utils";
+import { deleteFileAction } from "~/server/actions/uploadthing";
+// import { deleteFileAction } from "~/server/actions/uploadthing";
+import { catchError, isFile } from "~/server/utils";
 import { Course } from "~/data/db/schema";
 import { courseSchema } from "~/data/validations/course";
-import { DropImage } from "~/islands/drop-image";
-import { FileDialog } from "~/islands/file-dialog";
+import { DroppableImage } from "~/islands/droppable-image";
 import { Icons } from "~/islands/icons";
 import { Button } from "~/islands/primitives/button";
 import {
@@ -43,6 +43,8 @@ import { Textarea } from "~/islands/primitives/textarea";
 import LoadingEditor from "~/islands/quill/loading-editor";
 import { OurFileRouter } from "~/app/(api)/api/uploadthing/core";
 
+import { ArrayForm } from "./array-form";
+
 const TextEditor = dynamic(() => import("~/islands/quill"), {
   ssr: false,
   loading: () => <LoadingEditor />,
@@ -56,34 +58,13 @@ type Inputs = z.infer<typeof courseSchema>;
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
-async function getBlob(url: string) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Network response was not ok");
-  const blob = await res.blob();
-  return blob;
-}
-
-function createFileFromBlob(blob: Blob, image: { name: string; url: string }) {
-  const file = new File([blob], image.name, { type: blob.type });
-  return Object.assign(file, { preview: image.url });
-}
-
 export function UpdateCourseForm({ course }: IUpdateCourseFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
-  const [file, setFile] = React.useState<FileWithPreview | null>(null);
+  // isPending deleting
+  const [isPendingDeleting, startTransitionDeleting] = React.useTransition();
 
-  React.useEffect(() => {
-    const image = course.thumbnail;
-    if (course && image) {
-      getBlob(image.url).then((blob) => {
-        const fileWithPreview = createFileFromBlob(blob, image);
-        setFile(fileWithPreview);
-      });
-    }
-  }, [course]);
-
-  const { isUploading, startUpload } = useUploadThing("productImage");
+  const { startUpload } = useUploadThing("productImage");
 
   // react-hook-form
   const form = useForm<Inputs>({
@@ -93,6 +74,8 @@ export function UpdateCourseForm({ course }: IUpdateCourseFormProps) {
       excerpt: course.excerpt || "",
       description: course.description || "",
       price: course.price,
+      prerequisites: course.prerequisites ?? [],
+      goals: course.goals ?? [],
       compareAtPrice: course.compareAtPrice,
       handle: course.handle,
       published: course.published,
@@ -100,7 +83,6 @@ export function UpdateCourseForm({ course }: IUpdateCourseFormProps) {
   });
 
   async function onSubmit(data: Inputs) {
-    console.log(data.thumbnail);
     startTransition(async () => {
       try {
         const images = isFile(data.thumbnail)
@@ -117,10 +99,26 @@ export function UpdateCourseForm({ course }: IUpdateCourseFormProps) {
             })
           : null;
 
+        if (data.thumbnail === null || images) {
+          if (course.thumbnail) {
+            deleteFileAction({ id: course.thumbnail.id });
+          }
+          // await fetch(`/api/uploadthing/${course.thumbnail!.id}`, {
+          //   method: "DELETE",
+          // });
+        }
+
         await updateCourseAction({
           ...data,
           id: course.id,
-          thumbnail: images ?? course.thumbnail,
+          userId: course.userId,
+          handle: data.title.toLowerCase().replace(/\s/g, "-"),
+          thumbnail:
+            typeof data.thumbnail === "string"
+              ? course.thumbnail
+              : images
+              ? images
+              : null,
         });
 
         form.reset();
@@ -139,116 +137,195 @@ export function UpdateCourseForm({ course }: IUpdateCourseFormProps) {
         className="grid w-full lg:grid-cols-3 gap-4 items-start"
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
       >
-        <Card
-          as="section"
-          id="update-store"
-          aria-labelledby="update-store-heading"
-          className="w-full lg:col-span-2"
-        >
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">Update your store</CardTitle>
-            <CardDescription>
-              Update your store name and description, or delete it
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <FormItem className="flex w-full flex-col gap-1.5">
-              <FormLabel>Imagen principal</FormLabel>
-              <FormControl>
-                <DropImage
-                  setValue={form.setValue}
-                  name="thumbnail"
-                  maxSize={1024 * 1024 * 4}
-                  file={file}
-                  setFile={setFile}
-                  isUploading={isUploading}
-                  disabled={isPending}
+        <div className="className=w-full lg:col-span-2 grid gap-4">
+          <Card
+            as="section"
+            id="update-store"
+            aria-labelledby="update-store-heading"
+          >
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-2xl">Actualiza tu curso</CardTitle>
+              <CardDescription>
+                Refina los detalles de tu curso aquí.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-2">
+              <FormItem className="flex w-full flex-col gap-1.5">
+                <FormLabel>Imagen principal</FormLabel>
+                <FormControl>
+                  <DroppableImage
+                    setValue={form.setValue}
+                    name="thumbnail"
+                    value={course.thumbnail?.url}
+                    maxSize={1024 * 1024 * 4}
+                    // file={file}
+                    // setFile={setFile}
+                    // isUploading={isUploading}
+                    // disabled={isPending}
+                  />
+                </FormControl>
+                <UncontrolledFormMessage
+                  message={form.formState.errors.description?.message}
                 />
-              </FormControl>
-              <UncontrolledFormMessage
-                message={form.formState.errors.description?.message}
+              </FormItem>
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Type store name here." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </FormItem>
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Type store name here." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="excerpt"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Extracto de la descripción</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Type store description here."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <TextEditor
-                      placeholder="Descripción"
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
-        <Card
-          as="section"
-          id="update-store"
-          aria-labelledby="update-store-heading"
-          className="w-full lg:col-span-1"
-        >
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">Precios y promociones</CardTitle>
-            <CardDescription>Crea tus cupones aquí</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <FormField
-              control={form.control}
-              name="published"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between">
-                  <div className="space-y-0.5">
-                    <FormLabel>Visualización</FormLabel>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
+              <FormField
+                control={form.control}
+                name="excerpt"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Extracto de la descripción</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Type store description here."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <TextEditor
+                        placeholder="Descripción"
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
+
+          <ArrayForm />
+        </div>
+        <div className="w-full lg:col-span-1 grid gap-4">
+          <Card
+            as="section"
+            id="update-store"
+            aria-labelledby="update-store-heading"
+          >
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-2xl">Estado del curso</CardTitle>
+              <CardDescription>Crea tus cupones aquí</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <FormField
+                control={form.control}
+                name="published"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between">
+                    <div className="space-y-0.5">
+                      <FormLabel>Visualización</FormLabel>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-2xl">Precios y promociones</CardTitle>
+              <CardDescription>Cambia el precio cuando quieras</CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-2">
+              <FormField
+                control={form.control}
+                name="goals"
+                render={({ field }) => (
+                  <FormField
+                    control={form.control}
+                    name="price"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Precio</FormLabel>
+                        <FormControl>
+                          <div className="relative mb-2 mt-6 rounded-md shadow-sm">
+                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                              <span className="text-zinc-500 sm:text-sm">
+                                $
+                              </span>
+                            </div>
+                            <Input
+                              className="block w-full py-1.5 pl-7"
+                              placeholder="0.00"
+                              {...field}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="goals"
+                render={({ field }) => (
+                  <FormField
+                    control={form.control}
+                    name="compareAtPrice"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Precio de comparación</FormLabel>
+                        <FormControl>
+                          <div className="relative mb-2 mt-6 rounded-md shadow-sm">
+                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                              <span className="text-zinc-500 sm:text-sm">
+                                $
+                              </span>
+                            </div>
+                            <Input
+                              className="block w-full py-1.5 pl-7"
+                              placeholder="0.00"
+                              {...field}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+              />
+              <span className="mt-2 block text-sm font-light">
+                Puedes cambiarlo cuando quieras
+              </span>
+            </CardContent>
+          </Card>
+        </div>
         <div className="flex md:ml-4 gap-x-2">
-          <Button className="whitespace-nowrap" disabled={isPending}>
+          <Button
+            className="whitespace-nowrap"
+            disabled={isPending || isPendingDeleting}
+          >
             {isPending && (
               <Icons.spinner
                 className="mr-2 h-4 w-4 animate-spin"
@@ -263,16 +340,17 @@ export function UpdateCourseForm({ course }: IUpdateCourseFormProps) {
             className="whitespace-nowrap"
             variant="destructive"
             onClick={() => {
-              startTransition(async () => {
+              startTransitionDeleting(async () => {
                 await deleteCourseAction({
                   id: course.id,
                 });
+                toast.success("Course deleted successfully.");
                 router.push(`/dashboard/courses`);
               });
             }}
-            disabled={isPending}
+            disabled={isPending || isPendingDeleting}
           >
-            {isPending && (
+            {isPendingDeleting && (
               <Icons.spinner
                 className="mr-2 h-4 w-4 animate-spin"
                 aria-hidden="true"

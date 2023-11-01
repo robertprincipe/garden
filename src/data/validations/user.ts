@@ -1,4 +1,7 @@
+import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+
+import { users } from "../db/schema";
 
 export const userAuthSchema = z.object({
   email: z.string().min(5).email(),
@@ -13,3 +16,5 @@ export const userAuthSchema = z.object({
         "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character",
     }),
 });
+
+export const userSchema = createInsertSchema(users);

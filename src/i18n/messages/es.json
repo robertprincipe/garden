@@ -98,7 +98,7 @@
   "Navbar": {
     "home": "Inicio",
     "sign-out": "Cerrar sesión",
-    "signin": "Iniciar sesión"
+    "signin": "Acceder"
   },
   "ProfileButton": {
     "admin": "Panel de administración",
@@ -181,7 +181,7 @@
   },
   "auth-pages-content": {
     "description": "Si lo necesitas, puedes vincular tus otros perfiles aquí. \nSimplemente use los botones a continuación para iniciar sesión con ellos también. \nLuego puede cerrar sesión y volver a iniciar sesión con cualquiera de los perfiles sociales que vinculó.",
-    "sign-out": "desconectar"
+    "sign-out": "Desconectar"
   },
   "common": {
     "home": {

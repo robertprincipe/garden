@@ -1,5 +1,7 @@
 "use client";
 
+import { Icon } from "~/components/icon";
+import { LogIn } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Link from "next-intl/link";
@@ -104,8 +106,16 @@ export default function UserMenu() {
     <>
       <Link
         href="/sign-in"
-        className={cn(buttonVariants({ variant: "default" }), "px-3")}
+        className={cn(
+          buttonVariants({ variant: "default", size: "sm" }),
+          "px-3",
+        )}
       >
+        {/* <Icon
+          icon="ph:sign-in-duotone"
+
+        /> */}
+        {/* <LogIn className="h-5 w-5 block sm:hidden" aria-hidden="true" /> */}
         {t("signin")}
       </Link>
     </>

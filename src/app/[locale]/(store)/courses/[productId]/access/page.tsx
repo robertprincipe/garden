@@ -13,7 +13,6 @@ import {
   CardDescription,
   CardHeader,
 } from "~/islands/primitives/card";
-import { ScrollArea } from "~/islands/primitives/scroll-area";
 import {
   Tabs,
   TabsContent,
@@ -23,100 +22,18 @@ import {
 import VideoPlayer from "~/islands/video-player";
 import { Shell } from "~/islands/wrappers/shell-variants";
 
-const CourseAccess = () => {
+import { Sidebar } from "./sidebar";
+
+type CourseAccessProps = {
+  params: {
+    productId: string;
+  };
+};
+
+const CourseAccess = ({ params }: CourseAccessProps) => {
   return (
     <div className="grid lg:grid-cols-7">
-      <div className="lg:col-span-2 lg:block hidden h-[calc(100vh-64px)] top-16 sticky border-r border-r-border">
-        <ScrollArea className="">
-          <h3 className="text-lg font-semibold p-3">Course content</h3>
-          <Accordion type="single" className="bg-card">
-            <AccordionItem className="px-3" value="module-1">
-              <AccordionTrigger className="hover:no-underline">
-                <div className="flex items-center gap-x-1">
-                  <div className="h-7 w-7 bg-muted font-medium text-xs rounded-full flex items-center justify-center">
-                    1
-                  </div>
-                  <span>Introducción a las cripto</span>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent className="-mx-3 bg-background">
-                <div className="[&>button]:border-b [&>button]:border-b-border [&>button:last-child]:border-b-0">
-                  <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
-                    <div className="flex gap-x-1 items-center">
-                      <Icon icon="ph:play-circle-bold" className="text-2xl" />
-                      <span>Instalaciones</span>
-                    </div>
-                    <span className="text-xs">3:12 min</span>
-                  </button>
-                  <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
-                    <div className="flex gap-x-1 items-center">
-                      <Icon icon="ph:play-circle-bold" className="text-2xl" />
-                      <span>Instalaciones</span>
-                    </div>
-                    <span className="text-xs">3:12 min</span>
-                  </button>
-                  <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
-                    <div className="flex gap-x-1 items-center">
-                      <Icon icon="ph:play-circle-bold" className="text-2xl" />
-                      <span>Instalaciones</span>
-                    </div>
-                    <span className="text-xs">3:12 min</span>
-                  </button>
-                  <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
-                    <div className="flex gap-x-1 items-center">
-                      <Icon icon="ph:play-circle-bold" className="text-2xl" />
-                      <span>Instalaciones</span>
-                    </div>
-                    <span className="text-xs">3:12 min</span>
-                  </button>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem className="px-3" value="module-2">
-              <AccordionTrigger className="hover:no-underline">
-                <div className="flex items-center gap-x-1">
-                  <div className="h-7 w-7 bg-muted font-medium text-xs rounded-full flex items-center justify-center">
-                    2
-                  </div>
-                  <span>Cripto experto</span>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent className="-mx-3 bg-background">
-                <div className="[&>button]:border-b [&>button]:border-b-border [&>button:last-child]:border-b-0">
-                  <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
-                    <div className="flex gap-x-1 items-center">
-                      <Icon icon="ph:play-circle-bold" className="text-2xl" />
-                      <span>Instalaciones</span>
-                    </div>
-                    <span className="text-xs">3:12 min</span>
-                  </button>
-                  <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
-                    <div className="flex gap-x-1 items-center">
-                      <Icon icon="ph:play-circle-bold" className="text-2xl" />
-                      <span>Instalaciones</span>
-                    </div>
-                    <span className="text-xs">3:12 min</span>
-                  </button>
-                  <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
-                    <div className="flex gap-x-1 items-center">
-                      <Icon icon="ph:play-circle-bold" className="text-2xl" />
-                      <span>Instalaciones</span>
-                    </div>
-                    <span className="text-xs">3:12 min</span>
-                  </button>
-                  <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
-                    <div className="flex gap-x-1 items-center">
-                      <Icon icon="ph:play-circle-bold" className="text-2xl" />
-                      <span>Instalaciones</span>
-                    </div>
-                    <span className="text-xs">3:12 min</span>
-                  </button>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </ScrollArea>
-      </div>
+      <Sidebar courseId={params.productId} />
       <div className="lg:col-span-5">
         <VideoPlayer
           provider="html5"
@@ -343,6 +260,7 @@ const CourseAccess = () => {
             </Tabs>
           </div>
         </div>
+        S
       </div>
     </div>
   );

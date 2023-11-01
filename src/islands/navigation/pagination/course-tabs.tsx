@@ -6,7 +6,7 @@ import { cn } from "~/server/utils";
 import { Tabs, TabsList, TabsTrigger } from "~/islands/primitives/tabs";
 
 interface ICourseTabsProps extends React.ComponentPropsWithoutRef<typeof Tabs> {
-  courseId: number;
+  courseId: string;
 }
 
 export function CourseTabs({
@@ -20,21 +20,23 @@ export function CourseTabs({
   const tabs = [
     {
       title: "Overview",
-      href: `/dashboard/courses/${courseId}`,
+      href: ``,
     },
     {
-      title: "Capitulos",
-      href: `/dashboard/courses/${courseId}/products`,
+      title: "Unidades",
+      href: `units`,
     },
     {
       title: "Orders",
-      href: `/dashboard/courses/${courseId}/orders`,
+      href: `orders`,
     },
     {
       title: "Analytics",
-      href: `/dashboard/courses/${courseId}/analytics`,
+      href: `analytics`,
     },
   ];
+
+  const currentPathname = pathname.split("/")?.[4] || "";
 
   return (
     <Tabs
@@ -46,13 +48,15 @@ export function CourseTabs({
         {tabs.map((tab) => (
           <TabsTrigger
             key={tab.title}
-            value={tab.href}
+            value={`/dashboard/courses/${courseId}/${tab.href}`}
             className={cn(
               "rounded-sm",
-              pathname === tab.href &&
+              currentPathname === tab.href &&
                 "bg-background text-foreground shadow-sm",
             )}
-            onClick={() => router.push(tab.href)}
+            onClick={() =>
+              router.push(`/dashboard/courses/${courseId}/${tab.href}`)
+            }
           >
             {tab.title}
           </TabsTrigger>

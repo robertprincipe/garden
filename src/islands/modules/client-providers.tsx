@@ -4,12 +4,15 @@ import { type ComponentProps } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { WithChildren } from "~/types";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
 import { queryClient } from "~/server/query";
 import { TooltipProvider } from "~/islands/primitives/tooltip";
 // import { I18nProviderClient } from "~/data/i18n/client";
 // import en from "~/data/i18n/dicts/en";
 import { ToasterNotifier } from "~/islands/wrappers/toaster";
+
+import ToasterConfig from "./toaster";
 
 export function ThemeProvider({
   children,
@@ -38,6 +41,7 @@ export function ClientProviders({
         <TooltipProvider>
           {children}
           <ToasterNotifier />
+          <ToasterConfig />
         </TooltipProvider>
         {/* </I18nProviderClient> */}
       </QueryClientProvider>

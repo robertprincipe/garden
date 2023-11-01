@@ -22,6 +22,7 @@ import {
   accounts,
   carts,
   comments,
+  NewUser,
   payments,
   stores,
   User,
@@ -200,16 +201,24 @@ export const createCheckoutSession = authAction(
   },
 ); */
 
-export const signUpAction = async (input: User) => {
+export const signUpAction = async (input: {
+  name: string;
+  email: string;
+  password: string;
+}) => {
   const sameEmail = await db.query.users.findFirst({
     where: or(eq(users.email, input.email), eq(users.name, input.name)),
   });
+
+  users.email;
+
+  input.email;
 
   if (sameEmail) {
     throw new Error("Email or nickname already exists");
   }
 
-  const passwordHash = await bcrypt.hash(input.password!, 10);
+  const passwordHash = await bcrypt.hash(input.password, 10);
 
   await db.insert(users).values({
     email: input.email,

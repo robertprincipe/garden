@@ -26,7 +26,7 @@ export const baseUrlByLocale: Record<Locale, string> = {
   en: "http://bleverse.com" || "http://localhost:3000",
   de: "http://bleverse.com/de" || "http://localhost:3000/de",
   es: "http://bleverse.com/es" || "http://localhost:3000/es",
-  uk: "http://bleverse.com/uk" || "http://localhost:3000/uk",
+  fr: "http://bleverse.com/fr" || "http://localhost:3000/fr",
 
   // en: process.env["BASE_URL_EN"] || "http://localhost:3000",
   // de: process.env["BASE_URL_DE"] || "http://localhost:3000/de",

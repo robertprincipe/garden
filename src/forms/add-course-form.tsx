@@ -1,8 +1,6 @@
 "use client";
 
 import * as React from "react";
-import dynamic from "next/dynamic";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { generateReactHelpers } from "@uploadthing/react/hooks";
@@ -15,6 +13,7 @@ import { addCourseAction } from "~/server/actions/course";
 import { catchError, isArrayOfFile, isFile } from "~/server/utils";
 import { courseSchema } from "~/data/validations/course";
 import { DropImage } from "~/islands/drop-image";
+import { DroppableImage } from "~/islands/droppable-image";
 import { FileDialog } from "~/islands/file-dialog";
 import { Icons } from "~/islands/icons";
 import { Button } from "~/islands/primitives/button";
@@ -29,7 +28,6 @@ import {
 } from "~/islands/primitives/form";
 import { Input } from "~/islands/primitives/input";
 import { Textarea } from "~/islands/primitives/textarea";
-import { Zoom } from "~/islands/zoom-image";
 import { OurFileRouter } from "~/app/(api)/api/uploadthing/core";
 
 interface IAddCourseFormProps {
@@ -73,7 +71,12 @@ export function AddCourseForm({ userId }: IAddCourseFormProps) {
               return null;
             })
           : null;
-        await addCourseAction({ ...data, userId, thumbnail: images });
+        await addCourseAction({
+          ...data,
+          userId,
+          thumbnail: images,
+          handle: data.title.toLowerCase().replace(/\s/g, "-"),
+        });
 
         form.reset();
         toast.success("Store added successfully.");
@@ -109,14 +112,14 @@ export function AddCourseForm({ userId }: IAddCourseFormProps) {
             </div>
           ) : null} */}
           <FormControl>
-            <DropImage
+            <DroppableImage
               setValue={form.setValue}
               name="thumbnail"
               maxSize={1024 * 1024 * 4}
-              file={files}
-              setFile={setFiles}
-              isUploading={isUploading}
-              disabled={isPending}
+              // file={file}
+              // setFile={setFile}
+              // isUploading={isUploading}
+              // disabled={isPending}
             />
           </FormControl>
           <UncontrolledFormMessage
@@ -152,13 +155,7 @@ export function AddCourseForm({ userId }: IAddCourseFormProps) {
             </FormItem>
           )}
         />
-        <Button
-          className="w-fit"
-          disabled={isPending}
-          onClick={() => {
-            console.log(form.formState.errors);
-          }}
-        >
+        <Button className="w-fit" disabled={isPending}>
           {isPending && (
             <Icons.spinner
               className="mr-2 h-4 w-4 animate-spin"

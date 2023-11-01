@@ -71,13 +71,15 @@ export default async function ProductsPage({
           Buy products from our stores
         </PageHeaderDescription>
       </PageHeader>
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div>
+      <div className="grid lg:grid-cols-7 gap-6">
+        <div className="lg:col-span-2">
+          <h3 className="font-heading mb-3 text-xl">Buscar</h3>
           <div className="relative mx-auto">
             <input
               type="text"
               id="search"
-              className="block bg-card rounded-xl px-2.5 pb-2.5 pt-5 w-full text-sm text-muted-foreground border-2 border-border appearance-none focus:border-primary focus:outline-none focus:ring-0 peer"
+              className="block bg-card rounded-xl px-2.5 pb-2.5 pt-5 w-full text-sm text-foreground border-2 border-border appearance-none focus:border-primary focus:outline-none focus:ring-0 peer"
+              autoComplete="off"
               placeholder=" "
             />
             <label
@@ -90,19 +92,49 @@ export default async function ProductsPage({
           <div>
             <h3 className="font-heading my-3 text-xl">Categorias</h3>
             <div className="flex gap-2 flex-wrap">
-              <button className={badgeVariants({ variant: "outline" })}>
+              <button
+                className={badgeVariants({
+                  variant: "outline",
+                  className:
+                    "hover:bg-primary hover:text-primary-foreground hover:border-primary",
+                })}
+              >
                 Ventas
               </button>
-              <button className={badgeVariants({ variant: "outline" })}>
+              <button
+                className={badgeVariants({
+                  variant: "outline",
+                  className:
+                    "hover:bg-primary hover:text-primary-foreground hover:border-primary",
+                })}
+              >
                 Programación
               </button>
-              <button className={badgeVariants({ variant: "outline" })}>
+              <button
+                className={badgeVariants({
+                  variant: "outline",
+                  className:
+                    "hover:bg-primary hover:text-primary-foreground hover:border-primary",
+                })}
+              >
                 Desarrollo personal
               </button>
-              <button className={badgeVariants({ variant: "outline" })}>
+              <button
+                className={badgeVariants({
+                  variant: "outline",
+                  className:
+                    "hover:bg-primary hover:text-primary-foreground hover:border-primary",
+                })}
+              >
                 SaaS
               </button>
-              <button className={badgeVariants({ variant: "outline" })}>
+              <button
+                className={badgeVariants({
+                  variant: "outline",
+                  className:
+                    "hover:bg-primary hover:text-primary-foreground hover:border-primary",
+                })}
+              >
                 Business
               </button>
             </div>

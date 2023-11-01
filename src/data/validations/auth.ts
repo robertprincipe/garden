@@ -16,6 +16,27 @@ export const authSchema = z.object({
     }),
 });
 
+export const signUpSchema = z.object({
+  // min message
+  name: z
+    .string()
+    .min(3, { message: "Name at least 3 characteres" })
+    .max(120, { message: "Name is too long" }),
+  email: z.string().email({
+    message: "Please enter a valid email address",
+  }),
+  password: z
+    .string()
+    .min(8, {
+      message: "Password must be at least 8 characters long",
+    })
+    .max(100)
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, {
+      message:
+        "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character",
+    }),
+});
+
 export const verifyEmailSchema = z.object({
   code: z
     .string()

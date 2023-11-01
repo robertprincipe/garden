@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { type FileWithPreview } from "~/types";
 import {
@@ -57,7 +55,6 @@ export function DropVideo<TFieldValues extends FieldValues>({
         const fileWithPreview = Object.assign(file, {
           preview: URL.createObjectURL(file),
         });
-        console.log(fileWithPreview);
         setFile(fileWithPreview);
       });
 

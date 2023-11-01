@@ -92,12 +92,24 @@
   }
 }
 
+.mention-textarea {
+  white-space: pre-wrap;
+}
+
+.mention-comment .mention {
+  background-color: #d1d5db;
+  color: #1f2937;
+  font-weight: bold;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground dark:bg-background;
   }
 }
 
