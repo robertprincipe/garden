@@ -3,9 +3,9 @@
 import * as React from "react";
 import { Icon } from "@iconify/react";
 import { siteConfig } from "~/app";
+import { Link } from "~/core/link";
 import { type MainMenuItem } from "~/types";
 import { ActivitySquare } from "lucide-react";
-import Link from "next-intl/link";
 
 import { cn } from "~/server/utils";
 import {

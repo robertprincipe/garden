@@ -1,6 +1,11 @@
 import React from "react";
+import { notFound } from "next/navigation";
 import { Icon } from "~/components/icon";
+import { redirect } from "~/navigation";
+import { eq } from "drizzle-orm";
 
+import { db } from "~/data/db/client";
+import { units } from "~/data/db/schema";
 import {
   Accordion,
   AccordionContent,
@@ -30,15 +35,31 @@ type CourseAccessProps = {
   };
 };
 
-const CourseAccess = ({ params }: CourseAccessProps) => {
+const CourseAccess = async ({ params }: CourseAccessProps) => {
+  const unit = await db.query.units.findFirst({
+    where: eq(units.courseId, params.productId),
+    with: {
+      chapters: true,
+    },
+  });
+
+  if (!unit) {
+    return notFound();
+  }
+
+  if (unit?.chapters[0]?.id) {
+    return redirect(
+      `/courses/${params.productId}/access/${unit?.chapters[0]?.id}`,
+    );
+  }
   return (
     <div className="grid lg:grid-cols-7">
       <Sidebar courseId={params.productId} />
       <div className="lg:col-span-5">
-        <VideoPlayer
+        {/* <VideoPlayer
           provider="html5"
           videoId="https://stream.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/low.mp4"
-        />
+        /> */}
         <div className="px-4 py-3">
           <div className="my-2 flex flex-col justify-between md:flex-row md:items-center">
             <div>
@@ -132,7 +153,36 @@ const CourseAccess = ({ params }: CourseAccessProps) => {
                     <AccordionTrigger>Cripto experto</AccordionTrigger>
                     <AccordionContent className="-mx-3">
                       <div className="[&>button]:border-b [&>button]:border-b-border [&>button:last-child]:border-b-0">
-                        <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
+                        <button
+                          type="button"
+                          className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full"
+                        >
+                          <span className="">
+                            <Icon
+                              icon="ph:play-circle-bold"
+                              className="text-2xl"
+                            />
+                            <span>Instalaciones</span>
+                          </span>
+                          <span className="text-xs">3:12 min</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full"
+                        >
+                          <span className="flex gap-x-1 items-center">
+                            <Icon
+                              icon="ph:play-circle-bold"
+                              className="text-2xl"
+                            />
+                            <span>Instalaciones</span>
+                          </span>
+                          <span className="text-xs">3:12 min</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full"
+                        >
                           <div className="flex gap-x-1 items-center">
                             <Icon
                               icon="ph:play-circle-bold"
@@ -142,27 +192,10 @@ const CourseAccess = ({ params }: CourseAccessProps) => {
                           </div>
                           <span className="text-xs">3:12 min</span>
                         </button>
-                        <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
-                          <div className="flex gap-x-1 items-center">
-                            <Icon
-                              icon="ph:play-circle-bold"
-                              className="text-2xl"
-                            />
-                            <span>Instalaciones</span>
-                          </div>
-                          <span className="text-xs">3:12 min</span>
-                        </button>
-                        <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
-                          <div className="flex gap-x-1 items-center">
-                            <Icon
-                              icon="ph:play-circle-bold"
-                              className="text-2xl"
-                            />
-                            <span>Instalaciones</span>
-                          </div>
-                          <span className="text-xs">3:12 min</span>
-                        </button>
-                        <button className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full">
+                        <button
+                          type="button"
+                          className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full"
+                        >
                           <div className="flex gap-x-1 items-center">
                             <Icon
                               icon="ph:play-circle-bold"

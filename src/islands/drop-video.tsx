@@ -28,8 +28,8 @@ interface IDropVideoProps<
   name: TName;
   setValue: UseFormSetValue<TFieldValues>;
   accept?: Accept;
-  maxSize?: number;
   maxFiles?: number;
+  maxSize?: number;
   file: FileWithPreview | null;
   setFile: React.Dispatch<React.SetStateAction<FileWithPreview | null>>;
   isUploading?: boolean;
@@ -43,6 +43,8 @@ export function DropVideo<TFieldValues extends FieldValues>({
     "video/*": [],
   },
   file,
+  maxFiles = 1,
+  maxSize = 10000000,
   setFile,
   isUploading = false,
   disabled = false,
@@ -51,6 +53,7 @@ export function DropVideo<TFieldValues extends FieldValues>({
 }: IDropVideoProps<TFieldValues>) {
   const onDrop = React.useCallback(
     (acceptedFiles: FileWithPath[], rejectedFiles: FileRejection[]) => {
+      // biome-ignore lint/complexity/noForEach: <explanation>
       acceptedFiles.forEach((file) => {
         const fileWithPreview = Object.assign(file, {
           preview: URL.createObjectURL(file),
@@ -59,9 +62,12 @@ export function DropVideo<TFieldValues extends FieldValues>({
       });
 
       if (rejectedFiles.length > 0) {
+        // biome-ignore lint/complexity/noForEach: <explanation>
         rejectedFiles.forEach(({ errors }) => {
           if (errors[0]?.code === "file-too-large") {
-            toast.error(`File is too large. Max size is`);
+            toast.error(
+              `File is too large. Max size is ${maxSize / 1024 / 1024} MB`,
+            );
             return;
           }
           errors[0]?.message && toast.error(errors[0].message);
@@ -81,6 +87,8 @@ export function DropVideo<TFieldValues extends FieldValues>({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept,
+    maxFiles,
+    maxSize,
   });
 
   // Revoke preview url when component unmounts
@@ -95,6 +103,7 @@ export function DropVideo<TFieldValues extends FieldValues>({
   return (
     <div>
       {file ? (
+        // biome-ignore lint/a11y/useMediaCaption: <explanation>
         <video
           src={file.preview}
           controls

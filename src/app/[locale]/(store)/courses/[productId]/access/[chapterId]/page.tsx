@@ -15,7 +15,7 @@ type CourseAccessProps = {
 
 async function CourseAccess({ params }: CourseAccessProps) {
   const course = await db.query.courses.findFirst({
-    where: eq(courses.handle, params.productId),
+    where: eq(courses.id, params.productId),
   });
 
   if (!course)
@@ -56,7 +56,7 @@ async function CourseAccess({ params }: CourseAccessProps) {
           <Sidebar
             units={courseOutline}
             chapterId={chapter.id}
-            courseHandle={course.handle}
+            courseId={course.id}
           />
         </ScrollArea>
       </div>

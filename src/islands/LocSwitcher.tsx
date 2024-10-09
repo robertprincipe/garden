@@ -1,5 +1,5 @@
+import { Link } from "~/core/link";
 import { useLocale, useTranslations } from "next-intl";
-import Link from "next-intl/link";
 
 const languages = ["en", "de", "es", "uk"];
 

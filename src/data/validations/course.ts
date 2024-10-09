@@ -79,7 +79,17 @@ export const chapterSchema = z.object({
   video: z
     .string()
     .url()
-
+    .or(
+      z
+        .unknown()
+        .refine((val) => {
+          if (val instanceof File) return true;
+          return false;
+        }, "Must be an array of File")
+        .optional()
+        .nullable()
+        .default(null),
+    )
     .optional()
     .nullable()
     .default(null),

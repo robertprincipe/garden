@@ -1,9 +1,9 @@
 "use client";
 
 import { siteConfig } from "~/app";
+import { Link } from "~/core/link";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import Link from "next-intl/link";
 import { cnBase } from "tailwind-variants";
 
 import { typography } from "~/server/text";

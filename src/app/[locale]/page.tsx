@@ -11,9 +11,9 @@ import {
   REPOSITORY_URL,
   siteConfig,
 } from "~/app";
+import { Link } from "~/core/link";
 import { desc, eq, sql } from "drizzle-orm";
 import { Download, Store } from "lucide-react";
-import Link from "next-intl/link";
 import { FaDiscord } from "react-icons/fa";
 import { Balancer } from "react-wrap-balancer";
 

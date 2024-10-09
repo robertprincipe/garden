@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Link } from "~/core/link";
 import { and, desc, eq, not } from "drizzle-orm";
-import Link from "next-intl/link";
 
 import { formatPrice, toTitleCase } from "~/server/utils";
 import { db } from "~/data/db/client";

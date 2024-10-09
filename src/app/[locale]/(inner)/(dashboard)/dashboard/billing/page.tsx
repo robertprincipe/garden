@@ -1,8 +1,8 @@
 import { type Metadata } from "next";
 import { redirect } from "next/navigation";
 import { appts, siteConfig } from "~/app";
+import { Link } from "~/core/link";
 import { getServerSession } from "next-auth";
-import Link from "next-intl/link";
 
 import { authOptions } from "~/server/auth";
 import { storeSubscriptionPlans } from "~/server/config/subscriptions";
@@ -64,8 +64,8 @@ export default async function BillingPage() {
             {!user?.isSubscribed
               ? "Upgrade to create more stores and products."
               : user.isCanceled
-              ? "Your plan will be canceled on "
-              : "Your plan renews on "}
+                ? "Your plan will be canceled on "
+                : "Your plan renews on "}
             {user?.stripeSubscriptionCurrentPeriodEnd
               ? `${formatDate(user.stripeSubscriptionCurrentPeriodEnd)}.`
               : null}

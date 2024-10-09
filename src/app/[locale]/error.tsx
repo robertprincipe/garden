@@ -4,8 +4,8 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
+import { Link } from "~/core/link";
 import { ClipboardCheck, ClipboardCopy } from "lucide-react";
-import Link from "next-intl/link";
 
 import { cn } from "~/server/utils";
 import { Button, buttonVariants } from "~/islands/primitives/button";

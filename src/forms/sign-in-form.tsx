@@ -3,8 +3,8 @@
 import * as React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "~/core/link";
 import { signIn, SignInResponse } from "next-auth/react";
-import Link from "next-intl/link";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
 

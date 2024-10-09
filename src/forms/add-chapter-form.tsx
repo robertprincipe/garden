@@ -53,17 +53,18 @@ export function AddChapterForm({ unitId, courseId }: IAddChapterFormProps) {
     defaultValues: {
       title: "",
       summary: "",
+      length: "",
       video: "",
       active: true,
     },
   });
 
   async function onSubmit(data: Inputs) {
-    let video: StoredVideo;
+    let video: StoredVideo | null;
     startTransition(async () => {
       try {
         if (provider === "html5") {
-          const video = isFile(data.video)
+          video = isFile(data.video)
             ? await startUpload([data.video]).then((res) => {
                 const formattedImages = res?.map((image) => ({
                   id: image.key,
@@ -93,7 +94,7 @@ export function AddChapterForm({ unitId, courseId }: IAddChapterFormProps) {
 
         toast.success("Chapter added successfully.");
         router.push(`/dashboard/courses/${courseId}/units/`);
-        router.refresh(); // Workaround for the inconsistency of cache revalidation
+        // router.refresh(); // Workaround for the inconsistency of cache revalidation
       } catch (err) {
         catchError(err);
       }
@@ -172,7 +173,7 @@ export function AddChapterForm({ unitId, courseId }: IAddChapterFormProps) {
               <DropVideo
                 setValue={form.setValue}
                 name="video"
-                maxSize={1024 * 1024 * 4}
+                // maxSize={1024 * 1024 * 4}
                 file={files}
                 setFile={setFiles}
                 isUploading={isUploading}

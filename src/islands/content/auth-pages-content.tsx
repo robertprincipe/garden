@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { useSearchParams } from "next/navigation";
 import { appts, siteConfig } from "~/app";
+import { Link } from "~/core/link";
 import { Loader2, MailIcon } from "lucide-react";
 import {
   signIn,
@@ -18,7 +19,6 @@ import {
   type ClientSafeProvider,
 } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import Link from "next-intl/link";
 import { FaGoogle } from "react-icons/fa";
 import { cnBase } from "tailwind-variants";
 
@@ -161,8 +161,8 @@ export default function AuthPageContent({
             {isAuthenticated
               ? "Manage Your Accounts"
               : isRegPage
-              ? `${t("RegisterForm.title")}`
-              : `${t("LoginForm.title")}`}
+                ? `${t("RegisterForm.title")}`
+                : `${t("LoginForm.title")}`}
           </CardDescription>
         </CardHeader>
 
@@ -214,8 +214,8 @@ export default function AuthPageContent({
                                   {isAuthenticated
                                     ? `${t("auth.other-options")}`
                                     : isRegPage
-                                    ? `${t("RegisterForm.other-options")}`
-                                    : `${t("LoginForm.other-options")}`}
+                                      ? `${t("RegisterForm.other-options")}`
+                                      : `${t("LoginForm.other-options")}`}
                                 </span>
                               </div>
                             </div>

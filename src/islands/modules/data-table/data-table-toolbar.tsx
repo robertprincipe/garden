@@ -3,11 +3,11 @@
 import * as React from "react";
 import { Cross2Icon, PlusCircledIcon, TrashIcon } from "@radix-ui/react-icons";
 import { type Table } from "@tanstack/react-table";
+import { Link } from "~/core/link";
 import type {
   DataTableFilterableColumn,
   DataTableSearchableColumn,
 } from "~/types";
-import Link from "next-intl/link";
 
 import { cn } from "~/server/utils";
 import { DataTableFacetedFilter } from "~/islands/modules/data-table/data-table-faceted-filter";

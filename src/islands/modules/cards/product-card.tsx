@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import Link from "next-intl/link";
+import { Link } from "~/core/link";
 import { toast } from "sonner";
 
 import { addToCartAction } from "~/server/actions/cart";

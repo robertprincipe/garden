@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Icon } from "@iconify/react";
 import { generateReactHelpers } from "@uploadthing/react/hooks";
+import { useRouter } from "~/navigation";
 import { FileWithPreview, StoredVideo } from "~/types";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -14,6 +14,7 @@ import {
   deleteChapterAction,
   updateChapterAction,
 } from "~/server/actions/course";
+import { deleteFileAction } from "~/server/actions/uploadthing";
 import { catchError, isFile, slugify } from "~/server/utils";
 import { Chapter, chapterSchema } from "~/data/validations/course";
 import { DropVideo } from "~/islands/drop-video";
@@ -34,6 +35,7 @@ import { Textarea } from "~/islands/primitives/textarea";
 import { OurFileRouter } from "~/app/(api)/api/uploadthing/core";
 
 interface UpdateChapterFormProps {
+  courseId: string;
   chapter: Chapter;
 }
 
@@ -41,11 +43,30 @@ type Inputs = z.infer<typeof chapterSchema>;
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
-export function UpdateChapterForm({ chapter }: UpdateChapterFormProps) {
+export function UpdateChapterForm({
+  courseId,
+  chapter,
+}: UpdateChapterFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
 
-  const [files, setFiles] = React.useState<FileWithPreview | null>(null);
+  const [file, setFile] = React.useState<FileWithPreview | null>(() => {
+    if (
+      chapter.video &&
+      chapter.video.provider === "html5" &&
+      chapter.video.id
+    ) {
+      const file = new File([], chapter.video.id, {
+        type: "video",
+      });
+      const fileWithPreview = Object.assign(file, {
+        preview: `https://utfs.io/f/${chapter.video.id}`,
+      });
+
+      return fileWithPreview;
+    }
+    return null;
+  });
   const [provider, setProvider] = React.useState(
     chapter.video?.provider ?? "html5",
   );
@@ -66,6 +87,19 @@ export function UpdateChapterForm({ chapter }: UpdateChapterFormProps) {
   });
 
   async function onSubmit(data: Inputs) {
+    if (!data.video) {
+      toast.error("Please upload a video.");
+      return;
+    }
+    // erase the video if it's not a file
+    if (
+      chapter.video &&
+      chapter?.video?.provider === "html5" &&
+      provider !== "html5"
+    ) {
+      ("use server");
+      deleteFileAction({ id: chapter.video.id });
+    }
     let video: StoredVideo = {
       id: typeof data.video === "string" ? data.video : "",
       provider,
@@ -73,25 +107,36 @@ export function UpdateChapterForm({ chapter }: UpdateChapterFormProps) {
     startTransition(async () => {
       try {
         if (provider === "html5" && isFile(data.video)) {
+          console.log("data.vodep", data.video);
           video = await startUpload([data.video]).then((res) => {
+            console.log("response", res);
             const formattedImages = res?.map((image) => ({
               id: image.key,
               // name: image.key.split("_")[1] ?? image.key,
               provider: "html5" as "html5" | "youtube" | "vimeo",
               // url: image.url,
             }));
+
+            console.log(formattedImages);
             if (formattedImages?.[0]) {
               return formattedImages[0];
             }
+
             return {
               id: "",
               provider: "html5" as "html5" | "youtube" | "vimeo",
             };
           });
         }
+
+        if (video.id === "") {
+          return;
+        }
+
         await updateChapterAction({
           ...data,
           unitId: chapter.unitId,
+          courseId: courseId,
           handle: slugify(data.title),
           id: chapter.id,
           video,
@@ -100,7 +145,6 @@ export function UpdateChapterForm({ chapter }: UpdateChapterFormProps) {
         form.reset();
         toast.success("Chapter update successfully.");
         // router.push(`/dashboard/courses/${courseId}/units/`);
-        router.refresh(); // Workaround for the inconsistency of cache revalidation
       } catch (err) {
         catchError(err);
       }
@@ -120,7 +164,7 @@ export function UpdateChapterForm({ chapter }: UpdateChapterFormProps) {
         toast.error("Error deleting chapter.");
       } else {
         toast.success("Chapter deleted successfully.");
-        router.push(`/dashboard/courses/`);
+        router.push(`/dashboard/courses/${courseId}/units/`);
       }
     });
   }
@@ -153,9 +197,8 @@ export function UpdateChapterForm({ chapter }: UpdateChapterFormProps) {
                 size={"sm"}
                 variant={"outline"}
                 className={`${
-                  provider === "html5"
-                    ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground border-primary"
-                    : ""
+                  provider === "html5" &&
+                  "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground border-primary"
                 }`}
                 onClick={() => changeProvider("html5")}
               >
@@ -166,9 +209,8 @@ export function UpdateChapterForm({ chapter }: UpdateChapterFormProps) {
                 size={"sm"}
                 variant={"outline"}
                 className={`${
-                  provider === "youtube"
-                    ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground border-primary"
-                    : ""
+                  provider === "youtube" &&
+                  "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground border-primary"
                 }`}
                 onClick={() => changeProvider("youtube")}
               >
@@ -179,9 +221,8 @@ export function UpdateChapterForm({ chapter }: UpdateChapterFormProps) {
                 size={"sm"}
                 variant={"outline"}
                 className={`${
-                  provider === "vimeo"
-                    ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground border-primary"
-                    : ""
+                  provider === "vimeo" &&
+                  "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground border-primary"
                 }`}
                 onClick={() => changeProvider("vimeo")}
               >
@@ -197,8 +238,8 @@ export function UpdateChapterForm({ chapter }: UpdateChapterFormProps) {
                 setValue={form.setValue}
                 name="video"
                 maxSize={1024 * 1024 * 4}
-                file={files}
-                setFile={setFiles}
+                file={file}
+                setFile={setFile}
                 isUploading={isUploading}
                 disabled={isPending}
               />
@@ -217,7 +258,7 @@ export function UpdateChapterForm({ chapter }: UpdateChapterFormProps) {
                   <Input
                     placeholder="Type store description here."
                     {...field}
-                    value={field.value || ""}
+                    value={typeof field.value === "string" ? field.value : ""}
                   />
                 </FormControl>
                 <FormMessage />
@@ -225,6 +266,7 @@ export function UpdateChapterForm({ chapter }: UpdateChapterFormProps) {
             )}
           />
         )}
+
         <FormField
           control={form.control}
           name="summary"

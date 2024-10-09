@@ -1,9 +1,6 @@
 "use client";
 
-import React, {
-  experimental_useOptimistic as useOptimistic,
-  useState,
-} from "react";
+import React, { useState } from "react";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import { useQuery } from "@tanstack/react-query";
 import _ from "lodash";
@@ -42,7 +39,7 @@ export const reorder = (list: any[], startIndex: number, endIndex: number) => {
   return result;
 };
 
-type ICourseOutlineProps = {
+type CourseOutlineProps = {
   units: Unit[];
   courseId: string;
 };
@@ -64,39 +61,12 @@ const Loading = () => (
   </div>
 );
 
-const CourseOutline = ({ units: us, courseId }: ICourseOutlineProps) => {
+const CourseOutline = ({ units, courseId }: CourseOutlineProps) => {
   const [isPending, startTransition] = React.useTransition();
-  const [units, setUnits] = useState<Unit[]>(us);
-
-  const { data, error } = useQuery({
-    queryKey: ["getUnits", courseId],
-    queryFn: () => getUnitsAction({ courseId }),
-    enabled: !units,
-  });
 
   const [editUnit, setEditUnit] = useState<Unit | null>(null);
   // se esta reordenando
   const [isReordering, setIsReordering] = useState(false);
-
-  const updateUnits = (unit: Unit | null) => {
-    if (!unit) {
-      // setEditUnit(null);
-      return;
-    }
-    const updatedUnits = units.map((u) => {
-      if (u.id === unit.id) {
-        return unit;
-      }
-      return u;
-    });
-    setUnits(updatedUnits);
-    setEditUnit(null);
-  };
-
-  const onDelete = (unitId: string) => {
-    const updatedUnits = units.filter((u) => u.id !== unitId);
-    setUnits(updatedUnits);
-  };
 
   async function onSubmit() {
     startTransition(async () => {
@@ -146,12 +116,11 @@ const CourseOutline = ({ units: us, courseId }: ICourseOutlineProps) => {
             source.index,
             destination.index,
           );
-          const updatedUnits = units.map((unit) =>
+          units = units.map((unit) =>
             unit.id !== sourceChapterId
               ? unit
               : { ...unit, chapters: updatedOrder },
           );
-          setUnits(updatedUnits);
         }
       } else {
         const sourceOrderChapters = units.find(
@@ -174,80 +143,70 @@ const CourseOutline = ({ units: us, courseId }: ICourseOutlineProps) => {
               : unit,
           );
 
-          setUnits(updatedUnits);
+          units = updatedUnits;
         }
       }
     }
 
     // Reordering units
     if (type === "droppable-unit") {
-      const updatedUnits = reorder(units, source.index, destination.index);
-
-      setUnits(updatedUnits);
+      units = reorder(units, source.index, destination.index);
     }
   };
 
-  if (!data?.items) return <Loading />;
+  if (!units) return <Loading />;
 
   return (
     <div>
-      {units && (
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <Drop id="droppable" type="droppable-unit">
-            {units.map((unit, idx) => {
-              return (
-                <DragUnit
-                  key={unit.id}
-                  unit={unit}
-                  setEditUnit={setEditUnit}
-                  index={idx}
-                >
-                  <Drop key={unit.id} id={unit.id} type="droppable-chapter">
-                    {unit?.chapters?.length ? (
-                      unit?.chapters.map((chapter, index) => {
-                        return (
-                          <DragChapter
-                            key={chapter.id}
-                            chapter={chapter}
-                            index={index}
-                            courseId={courseId}
-                            unitId={unit.id}
-                          />
-                        );
-                      })
-                    ) : (
-                      <div className="h-5" />
-                    )}
-                  </Drop>
-                </DragUnit>
-              );
-            })}
-          </Drop>
-        </DragDropContext>
-      )}
-      {/* {!!editModule && ( */}
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Drop id="droppable" type="droppable-unit">
+          {units.map((unit, idx) => {
+            return (
+              <DragUnit
+                key={unit.id}
+                unit={unit}
+                setEditUnit={setEditUnit}
+                index={idx}
+              >
+                <Drop key={unit.id} id={unit.id} type="droppable-chapter">
+                  {unit?.chapters?.length ? (
+                    unit?.chapters.map((chapter, index) => {
+                      return (
+                        <DragChapter
+                          key={chapter.id}
+                          chapter={chapter}
+                          index={index}
+                          courseId={courseId}
+                          unitId={unit.id}
+                        />
+                      );
+                    })
+                  ) : (
+                    <div className="h-5" />
+                  )}
+                </Drop>
+              </DragUnit>
+            );
+          })}
+        </Drop>
+      </DragDropContext>
 
-      {/* )} */}
-      <div className="flex items-center gap-x-1">
-        <AddUnitForm courseId={courseId} setUnits={setUnits} />
-        {isReordering ? (
-          <Button
-            size="sm"
-            variant={"secondary"}
-            onClick={() => onSubmit()}
-            disabled={isPending}
-          >
-            Actualizar
-          </Button>
-        ) : null}
-      </div>
+      {isReordering ? (
+        <Button
+          size="sm"
+          variant={"secondary"}
+          onClick={() => onSubmit()}
+          disabled={isPending}
+        >
+          Actualizar
+        </Button>
+      ) : null}
 
       {editUnit ? (
         <UpdateUnitForm
+          courseId={courseId}
           unit={editUnit}
           setEditUnit={setEditUnit}
-          onUpdate={updateUnits}
-          onDelete={onDelete}
         />
       ) : null}
     </div>

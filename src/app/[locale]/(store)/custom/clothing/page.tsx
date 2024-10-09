@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import { cookies } from "next/headers";
-import Link from "next-intl/link";
+import { Link } from "~/core/link";
 
 import { getCartItemsAction } from "~/server/actions/cart";
 import { getProductsAction } from "~/server/actions/product";

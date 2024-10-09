@@ -3,7 +3,7 @@
 import * as React from "react";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { type ColumnDef } from "@tanstack/react-table";
-import Link from "next-intl/link";
+import { Link } from "~/core/link";
 import { toast } from "sonner";
 
 import { deleteProductAction } from "~/server/actions/product";

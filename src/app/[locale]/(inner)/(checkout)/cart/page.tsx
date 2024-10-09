@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import Link from "next-intl/link";
+import { Link } from "~/core/link";
 
 import { getUniqueStoreIds } from "~/server/actions/cart";
 import { cn } from "~/server/utils";

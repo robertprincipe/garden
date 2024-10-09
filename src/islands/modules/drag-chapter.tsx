@@ -3,8 +3,8 @@
 import * as React from "react";
 import { Draggable } from "@hello-pangea/dnd";
 import { Icon } from "@iconify/react";
+import { Link } from "~/core/link";
 import clsx from "clsx";
-import Link from "next-intl/link";
 
 export const DragChapter = ({
   index,

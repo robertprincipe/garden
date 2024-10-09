@@ -3,9 +3,9 @@
 import * as React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "~/components/icon";
+import { Link } from "~/core/link";
 import { type Option } from "~/types";
 import { Star } from "lucide-react";
-import Link from "next-intl/link";
 
 import { getRandomPatternStyle } from "~/server/pattern";
 import { formatPrice } from "~/server/utils";

@@ -1,4 +1,4 @@
-import Link from "next-intl/link";
+import { Link } from "~/core/link";
 
 import { getCartAction } from "~/server/actions/cart";
 import { cn, formatPrice } from "~/server/utils";

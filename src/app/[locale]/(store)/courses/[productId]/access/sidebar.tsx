@@ -17,7 +17,7 @@ type SidebarProps = {
 
 export async function Sidebar({ courseId }: SidebarProps) {
   const course = await db.query.courses.findFirst({
-    where: eq(courses.handle, courseId),
+    where: eq(courses.id, courseId),
   });
 
   if (!course)
@@ -62,6 +62,7 @@ export async function Sidebar({ courseId }: SidebarProps) {
                 <div className="[&>button]:border-b [&>button]:border-b-border [&>button:last-child]:border-b-0">
                   {unit.chapters.map((chapter) => (
                     <button
+                      type="button"
                       key={chapter.id}
                       className="text-sm font-medium hover:bg-card/80 px-3 py-2 flex justify-between items-center w-full"
                     >

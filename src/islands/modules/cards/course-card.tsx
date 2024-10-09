@@ -1,5 +1,5 @@
+import { Link } from "~/core/link";
 import { StoredFile } from "~/types";
-import Link from "next-intl/link";
 
 import { getRandomPatternStyle } from "~/server/pattern";
 import { cn } from "~/server/utils";

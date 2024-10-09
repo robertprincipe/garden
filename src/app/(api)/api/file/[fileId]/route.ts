@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { utapi } from "uploadthing/server";
+import { UTApi } from "uploadthing/server";
 
 import { authOptions } from "~/server/auth";
 
@@ -15,6 +15,8 @@ export async function DELETE(
     if (!session?.userId) throw new Error("Unauthorized");
     // if (!session) throw new Error("Unauthorized");
     params.fileId;
+
+    const utapi = new UTApi();
 
     const ok = await utapi.deleteFiles(params.fileId);
 

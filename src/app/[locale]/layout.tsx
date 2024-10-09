@@ -6,6 +6,7 @@
 import "~/styles/globals.css";
 
 import { PropsWithChildren } from "react";
+import { Viewport } from "next";
 import { Oswald as FontHeading, Inter as FontSans } from "next/font/google";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { siteConfig } from "~/app";
@@ -53,9 +54,8 @@ export const metadata = seo({
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
-  viewport: { width: "device-width", initialScale: 1 },
   creator: siteConfig.author,
-  publisher: "Bleverse",
+  publisher: "make",
   authors: [
     {
       name: siteConfig.author,
@@ -63,13 +63,10 @@ export const metadata = seo({
     },
   ],
   robots: "index, follow",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-  applicationName: "Bleverse garden",
+
+  applicationName: "Garden",
   alternates: {
-    canonical: "https://garden.bleverse.com",
+    canonical: "https://garden.make.com.pe",
   },
   openGraph: {
     type: "website",
@@ -99,6 +96,15 @@ export const metadata = seo({
     icon: "/favicon.ico",
   },
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+  width: "device-width",
+  initialScale: 1,
+};
 
 type LocaleLayoutProps = PropsWithChildren<LocaleLayoutParams>;
 

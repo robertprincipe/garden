@@ -1,6 +1,6 @@
 import { HTMLAttributes, type FC } from "react";
+import { Link } from "~/core/link";
 import clsx from "clsx";
-import Link from "next-intl/link";
 
 import { LanguageSwitcher } from "./language-switcher";
 import { UserLogin } from "./user-login";

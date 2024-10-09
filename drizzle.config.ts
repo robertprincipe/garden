@@ -21,6 +21,7 @@ dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
 const connectionString = process.env.DATABASE_URL + "?sslmode=require";
+// const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
   throw new Error(

@@ -1,10 +1,10 @@
 "use client";
 
 import { Icon } from "~/components/icon";
+import { Link } from "~/core/link";
 import { LogIn } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import Link from "next-intl/link";
 
 import { cn } from "~/server/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "~/islands/account/avatar";

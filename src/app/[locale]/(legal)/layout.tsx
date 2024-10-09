@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
+import { Link } from "~/core/link";
 import { ChevronLeftIcon } from "lucide-react";
-import Link from "next-intl/link";
 
 import { Button } from "~/islands/primitives/button";
 

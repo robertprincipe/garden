@@ -139,8 +139,6 @@ export type WithChildren<T = unknown> = T & { children: React.ReactNode };
 
 export type LocaleLayoutParams = { params: { locale: string } };
 
-export interface NullLayoutParams {}
-
 export type GeneralShellParams = { header?: React.ReactNode };
 
 /**

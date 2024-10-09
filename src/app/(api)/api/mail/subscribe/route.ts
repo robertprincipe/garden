@@ -82,8 +82,8 @@ export async function POST(req: Request) {
 
     const resendError = error as ErrorResponse;
 
-    if (resendError?.error?.message) {
-      return new Response(resendError.error.message, { status: 429 });
+    if (resendError?.message) {
+      return new Response(resendError.message, { status: 429 });
     }
 
     if (error instanceof Error) {

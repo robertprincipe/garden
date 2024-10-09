@@ -1,7 +1,7 @@
 import { Icon } from "~/components/icon";
-import { Unit } from "~/types";
-import Link from "next-intl/link";
+import { Link } from "~/core/link";
 
+import { Unit } from "~/data/validations/course";
 import {
   Accordion,
   AccordionContent,
@@ -11,15 +11,11 @@ import {
 
 type SidebarProps = {
   chapterId: string;
-  courseHandle: string;
+  courseId: string;
   units: Unit[];
 };
 
-export async function Sidebar({
-  units,
-  courseHandle,
-  chapterId,
-}: SidebarProps) {
+export async function Sidebar({ units, courseId, chapterId }: SidebarProps) {
   return (
     <Accordion
       type="single"
@@ -49,7 +45,7 @@ export async function Sidebar({
                     chapterId === chapter.id ? "bg-primary" : ""
                   }`}
                   // onClick={() => setChapter(chapter.id)}
-                  href={`/courses/${courseHandle}/access/${chapter.id}`}
+                  href={`/courses/${courseId}/access/${chapter.id}`}
                 >
                   <div className="flex gap-x-1 items-center">
                     <Icon icon="ph:play-circle-bold" className="text-2xl" />

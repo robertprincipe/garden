@@ -1,4 +1,4 @@
-import Link from "next-intl/link";
+import { Link } from "~/core/link";
 
 import { cn, truncate } from "~/server/utils";
 import { Icons } from "~/islands/icons";

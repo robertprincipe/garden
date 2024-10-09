@@ -1,13 +1,16 @@
+"use client";
+
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { addUnitAction } from "~/server/actions/course";
 import { catchError } from "~/server/utils";
-import { unitSchema } from "~/data/validations/course";
+import { Unit, unitSchema } from "~/data/validations/course";
 import { Icons } from "~/islands/icons";
 import { Button, buttonVariants } from "~/islands/primitives/button";
 import {
@@ -26,23 +29,19 @@ import {
 import { Input } from "~/islands/primitives/input";
 import { Switch } from "~/islands/primitives/switch";
 
-import { Mention } from "./mention";
-
 type Inputs = z.infer<typeof unitSchema>;
 
-export function AddUnitForm({
-  courseId,
-  setUnits,
-}: {
-  courseId: string;
-  setUnits: React.Dispatch<React.SetStateAction<any[]>>;
-}) {
-  const router = useRouter();
+export function AddUnitForm({ courseId }: { courseId: string }) {
+  const queryClient = useQueryClient();
   const [open, setOpen] = React.useState(false);
   const [isPending, startTransition] = React.useTransition();
 
   const form = useForm<Inputs>({
     resolver: zodResolver(unitSchema),
+    defaultValues: {
+      title: "",
+      active: true,
+    },
   });
 
   async function onSubmit(data: Inputs) {
@@ -50,8 +49,10 @@ export function AddUnitForm({
       try {
         const unit = await addUnitAction({ ...data, courseId });
         setOpen(false);
-        router.refresh();
-        setUnits((prev) => [...prev, unit]);
+        // router.refresh();
+        queryClient.invalidateQueries({
+          queryKey: ["course_units", courseId],
+        });
         form.reset();
         toast.success("Unidad creada correctamente.");
       } catch (error) {
@@ -83,23 +84,6 @@ export function AddUnitForm({
                   <FormMessage />
                 </FormItem>
               )}
-            />
-
-            <Mention
-              users={[
-                {
-                  id: 1,
-                  name: "Juan",
-                },
-                {
-                  id: 2,
-                  name: "Pedro",
-                },
-                {
-                  id: 3,
-                  name: "Maria",
-                },
-              ]}
             />
 
             <FormField

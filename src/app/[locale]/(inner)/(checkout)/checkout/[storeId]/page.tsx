@@ -1,8 +1,8 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import { Link } from "~/core/link";
 import { eq } from "drizzle-orm";
-import Link from "next-intl/link";
 
 import { getCartAction } from "~/server/actions/cart";
 import {

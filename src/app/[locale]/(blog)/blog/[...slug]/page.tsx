@@ -6,7 +6,7 @@ import "~/styles/mdx.css";
 
 import { type Metadata } from "next";
 // import Image from "next/image";
-import Link from "next-intl/link";
+import { Link } from "~/core/link";
 
 import { cn } from "~/server/utils";
 // import { absoluteUrl, cn, formatDate } from "~/server/utils";

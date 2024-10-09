@@ -121,7 +121,7 @@ const config = defineConfig({
         "@typescript-eslint/no-confusing-void-expression": "off",
         "@typescript-eslint/prefer-optional-chain": "off",
         "@typescript-eslint/no-unnecessary-condition": "off",
-        "@tanstack/query/prefer-query-object-syntax": "error",
+        // "@tanstack/query/prefer-query-object-syntax": "error",
         "@typescript-eslint/no-redundant-type-constituents": "off",
         "@typescript-eslint/no-unnecessary-type-assertion": "off",
         "@typescript-eslint/no-unsafe-argument": "off",

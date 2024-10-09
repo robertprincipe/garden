@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { Draggable } from "@hello-pangea/dnd";
 import { Icon } from "@iconify/react";
-import Link from "next-intl/link";
+import { Link } from "~/core/link";
 
 import { buttonVariants } from "~/islands/primitives/button";
 

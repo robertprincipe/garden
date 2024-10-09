@@ -1,11 +1,11 @@
 "use client";
 
 import { HTMLAttributes, type FC } from "react";
+import { Link } from "~/core/link";
 import { locales } from "~/i18n/locales";
+import { usePathname } from "~/navigation";
 import clsx from "clsx";
 import { useLocale } from "next-intl";
-import { usePathname } from "next-intl/client";
-import Link from "next-intl/link";
 
 export const LanguageSwitcher: FC<
   Omit<HTMLAttributes<HTMLElement>, "children">
@@ -20,8 +20,6 @@ export const LanguageSwitcher: FC<
           <li key={locale}>
             <Link
               href={pathname}
-              locale={locale}
-              prefetch={false}
               className={clsx("hover:underline", {
                 "font-bold": currentLocale === locale,
               })}

@@ -1,3 +1,5 @@
+"use client";
+
 import { Icon } from "~/components/icon";
 
 import { Chapter } from "~/data/validations/course";
@@ -33,8 +35,12 @@ export function Principal({
   return (
     <div className="lg:col-span-5">
       <VideoPlayer
-        provider={chapter.video!.provider}
-        videoId={chapter.video!.id}
+        provider={chapter.video ? chapter.video!.provider : "html5"}
+        videoId={
+          chapter.video!.provider === "html5"
+            ? `https://utfs.io/f/${chapter.video!.id}`
+            : chapter.video!.id
+        }
       />
       <div className="px-4 py-3">
         <div className="my-2 flex flex-col justify-between md:flex-row md:items-center">

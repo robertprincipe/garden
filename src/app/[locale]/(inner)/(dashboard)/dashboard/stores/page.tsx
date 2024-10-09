@@ -1,9 +1,9 @@
 import { type Metadata } from "next";
 import { redirect } from "next/navigation";
 import { RocketIcon } from "@radix-ui/react-icons";
+import { Link } from "~/core/link";
 import { desc, eq, sql } from "drizzle-orm";
 import { getServerSession } from "next-auth";
-import Link from "next-intl/link";
 
 import { authOptions } from "~/server/auth";
 import {

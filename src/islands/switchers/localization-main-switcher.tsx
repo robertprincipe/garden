@@ -4,8 +4,8 @@ import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 import { useSearchParams } from "next/navigation";
 import { localeLabels, locales } from "~/i18n/locales";
+import { usePathname, useRouter } from "~/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next-intl/client";
 
 import { useIsClient } from "~/hooks/use-is-client";
 import { Button, type ButtonProps } from "~/islands/primitives/button";
@@ -52,7 +52,7 @@ export default function LocalizationMainSwitcher({
     );
 
   const handleClick = (locale: string) => {
-    router.replace(pathname + "?" + searchParams, {
+    router.replace(`${pathname}?${searchParams}`, {
       locale,
     });
   };
@@ -107,16 +107,16 @@ type LocaleFlagIconProps = { locale: string };
 
 function LocaleFlagIcon({ locale }: LocaleFlagIconProps) {
   if (locale === "en") {
-    return <span aria-hidden="true" className="fi fi-gb"></span>;
+    return <span aria-hidden="true" className="fi fi-gb" />;
   } else if (locale === "uk") {
-    return <span aria-hidden="true" className="fi fi-ua"></span>;
+    return <span aria-hidden="true" className="fi fi-ua" />;
   } else if (locale === "pl") {
     return (
       <span
         aria-hidden="true"
         className="border border-zinc-200 border-b-0 dark:border-none fi fi-pl"
-      ></span>
+      />
     );
   }
-  return <span aria-hidden="true" className={`fi fi-${locale}`}></span>;
+  return <span aria-hidden="true" className={`fi fi-${locale}`} />;
 }

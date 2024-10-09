@@ -16,7 +16,7 @@ import {
   not,
   sql,
 } from "drizzle-orm";
-import { utapi } from "uploadthing/server";
+import { UTApi } from "uploadthing/server";
 import { z } from "zod";
 
 import { slugify } from "~/server/utils";
@@ -51,7 +51,7 @@ export async function addCourseAction(
     thumbnail: input.thumbnail,
   });
 
-  revalidatePath("/dashboard/courses");
+  // revalidatePath("/dashboard/courses");
 }
 
 export async function updateCourseAction(
@@ -71,7 +71,7 @@ export async function updateCourseAction(
 
   await db.update(courses).set(input).where(eq(courses.id, input.id));
 
-  revalidatePath(`/dashboard/courses/${input.id}`);
+  // revalidatePath(`/dashboard/courses/${input.id}`);
 }
 
 export async function checkCourseAction(input: { title: string; id?: string }) {
@@ -100,12 +100,13 @@ export async function deleteCourseAction(input: { id: string }) {
   }
 
   if (course.thumbnail) {
+    const utapi = new UTApi();
     await utapi.deleteFiles(course.thumbnail.id);
   }
 
   await db.delete(courses).where(eq(courses.id, input.id));
 
-  revalidatePath(`/dashboard/courses`);
+  // revalidatePath(`/dashboard/courses`);
 }
 
 export async function addModuleAction(
@@ -128,7 +129,7 @@ export async function addModuleAction(
     position: input.position,
   });
 
-  revalidatePath("/dashboard/units");
+  // revalidatePath("/dashboard/units");
 }
 
 export async function getCoursesAction(
@@ -240,6 +241,9 @@ export async function getUnitsAction(input: { courseId: string }) {
 export async function addUnitAction(
   input: NewUnit & {
     courseId: string;
+    params?: {
+      locale: string;
+    };
   },
 ) {
   const unitWithSameTitle = await db.query.units.findFirst({
@@ -280,6 +284,7 @@ export async function addUnitAction(
 export async function updateUnitAction(
   input: UpdateUnit & {
     id: string;
+    pathname: string;
   },
 ) {
   const unitWithSameTitle = await db.query.units.findFirst({
@@ -299,6 +304,8 @@ export async function updateUnitAction(
         active: input.active,
       })
       .where(eq(units.id, input.id));
+
+    // revalidatePath(input.pathname);
   } catch (_) {
     return "The unit was not updated, try again later";
   }
@@ -341,13 +348,14 @@ export async function addChapterAction(
     });
   });
 
-  revalidatePath(`/dashboard/courses/${input.courseId}/units`);
+  // revalidatePath(`/dashboard/courses/${input.courseId}/units`);
 }
 
 export async function updateChapterAction(
   input: NewChapter & {
     id: string;
     unitId: string;
+    courseId: string;
     video: StoredVideo;
   },
 ) {
@@ -373,7 +381,9 @@ export async function updateChapterAction(
     })
     .where(eq(chapters.id, input.id));
 
-  revalidatePath("/dashboard/units");
+  revalidatePath(
+    `/dashboard/courses/${input.courseId}/units/${input.unitId}/chapters/${input.id}`,
+  );
 }
 
 export async function updateCourseOutline(input: {

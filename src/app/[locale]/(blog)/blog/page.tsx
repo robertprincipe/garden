@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 
 // import Image from "next/image";
-// import Link from "next-intl/link";
+// import { Link } from "~/core/link";
 // import dayjs from "dayjs";
 
 // import { formatDate } from "~/server/utils";

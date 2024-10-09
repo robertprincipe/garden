@@ -1,5 +1,10 @@
+"use client";
+
 import * as React from "react";
+import { revalidatePath } from "next/cache";
+import { usePathname } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -28,19 +33,19 @@ import { Switch } from "~/islands/primitives/switch";
 type Inputs = z.infer<typeof unitSchema>;
 
 export function UpdateUnitForm({
+  courseId,
   unit,
   setEditUnit,
-  onUpdate,
-  onDelete: onDeleteUnit,
 }: {
+  courseId: string;
   unit: Unit;
   setEditUnit: any;
-  onUpdate: (unit: any) => void;
-  onDelete: (unitId: string) => void;
 }) {
   const [isPending, startTransition] = React.useTransition();
+  const pathname = usePathname();
+  const queryClient = useQueryClient();
 
-
+  console.log(pathname);
 
   const form = useForm<Inputs>({
     resolver: zodResolver(unitSchema),
@@ -52,14 +57,16 @@ export function UpdateUnitForm({
 
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
-      const error = await updateUnitAction({ ...data, id: unit.id });
+      const error = await updateUnitAction({ ...data, id: unit.id, pathname });
       if (error) {
         catchError(error);
         return;
       }
-      onUpdate({ ...data, id: unit.id });
-      toast("Unidad actualizada correctamente.");
       setEditUnit(null);
+      queryClient.invalidateQueries({
+        queryKey: ["course_units", courseId],
+      });
+      toast("Unidad actualizada correctamente.");
     });
   }
 
@@ -70,7 +77,9 @@ export function UpdateUnitForm({
         catchError(error);
         return;
       }
-      onDeleteUnit(unit.id);
+      queryClient.invalidateQueries({
+        queryKey: ["course_units", courseId],
+      });
       toast("Unidad eliminada correctamente.");
       setEditUnit(null);
     });

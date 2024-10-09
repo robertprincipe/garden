@@ -2,8 +2,8 @@ import { type Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Icon } from "~/components/icon";
+import { Link } from "~/core/link";
 import { and, desc, eq, not } from "drizzle-orm";
-import Link from "next-intl/link";
 
 import { getRandomPatternStyle } from "~/server/pattern";
 import { formatPrice, toTitleCase } from "~/server/utils";
@@ -189,6 +189,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           ) : null}
           <div
             className="prose prose-zinc mt-3 max-w-none dark:prose-invert"
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
             dangerouslySetInnerHTML={{ __html: product.description ?? "" }}
           />
           <div className="mb-6">

@@ -1,8 +1,8 @@
 import { type Metadata } from "next";
 import { revalidatePath } from "next/cache";
 import { notFound, redirect } from "next/navigation";
+import { Link } from "~/core/link";
 import { and, eq, not } from "drizzle-orm";
-import Link from "next-intl/link";
 
 import { getStripeAccountAction } from "~/server/actions/stripe";
 import { cn, formatDate } from "~/server/utils";

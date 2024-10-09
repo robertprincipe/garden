@@ -40,7 +40,7 @@ export default withAuth(
     const token = req.nextauth.token;
 
     if (req.nextUrl.pathname.startsWith("/api")) {
-      if (true) return NextResponse.next();
+      return NextResponse.next();
     }
 
     if (!token) {

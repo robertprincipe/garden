@@ -6,7 +6,6 @@ import { db } from "~/data/db/client";
 import { chapters } from "~/data/db/schema";
 import { fullURL } from "~/data/meta/builder";
 import { UpdateChapterForm } from "~/forms/update-chapter-form";
-import { ProductPager } from "~/islands/navigation/pagination/product-pager";
 import {
   Card,
   CardContent,
@@ -23,6 +22,7 @@ export const metadata: Metadata = {
 
 interface UpdateProductPageProps {
   params: {
+    courseId: string;
     unitId: string;
     chapterId: string;
   };
@@ -53,7 +53,7 @@ export default async function UpdateProductPage({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <UpdateChapterForm chapter={chapter} />
+        <UpdateChapterForm courseId={params.courseId} chapter={chapter} />
       </CardContent>
     </Card>
   );

@@ -1,9 +1,14 @@
+"use client";
+
 import { type Metadata } from "next";
 import dynamic from "next/dynamic";
-import { signal } from "@preact/signals-react";
+import { useQuery } from "@tanstack/react-query";
 import { Icon } from "~/components/icon";
+import { Link } from "~/navigation";
 
+import { getUnitsAction } from "~/server/actions/course";
 import { Unit } from "~/data/validations/course";
+import { AddUnitForm } from "~/forms/add-unit-form";
 import { buttonVariants } from "~/islands/primitives/button";
 import {
   Card,
@@ -13,10 +18,10 @@ import {
   CardTitle,
 } from "~/islands/primitives/card";
 
-export const metadata: Metadata = {
-  title: "Products",
-  description: "Manage your products",
-};
+// export const metadata: Metadata = {
+//   title: "Products",
+//   description: "Manage your products",
+// };
 
 interface ProductsPageProps {
   params: {
@@ -26,8 +31,6 @@ interface ProductsPageProps {
     [key: string]: string | string[] | undefined;
   };
 }
-
-const units = signal<Unit[]>([]);
 
 const CourseOutline = dynamic(
   () => import("~/islands/modules/course-outline"),
@@ -52,9 +55,20 @@ const CourseOutline = dynamic(
   },
 );
 
-export default async function ProductsPage({
+export default function ProductsPage({
   params: { courseId },
 }: ProductsPageProps) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["course_units", courseId],
+    queryFn: () => {
+      return fetch(`http://localhost:3000/api/courses/${courseId}/units`).then(
+        (res) => res.json(),
+      );
+    },
+  });
+
+  console.log(data);
+
   return (
     <div className="space-y-2.5">
       <section className="">
@@ -76,7 +90,11 @@ export default async function ProductsPage({
         </div>
         <div className="grid lg:grid-cols-3 items-start gap-6">
           <div className="lg:col-span-2 space-y-2">
-            <CourseOutline units={course.items} courseId={courseId} />
+            {isLoading && <div>Cargando...</div>}
+            {data?.length && !isLoading && (
+              <CourseOutline units={data} courseId={courseId} />
+            )}
+            <AddUnitForm courseId={courseId} />
           </div>
           <div className="space-y-6">
             <Card className="overflow-hidden rounded-lg border bg-card border-border">
@@ -91,15 +109,6 @@ export default async function ProductsPage({
                   {/* <Icon icon="ph-users-duotone" className="text-xl" /> */}
                   <span>0 Miembros</span>
                 </div>
-                <a
-                  // className="bg-spring-green-400 block w-full rounded-lg py-2 text-center font-semibold text-white"
-                  className={buttonVariants({
-                    className: "w-full",
-                  })}
-                  href="#"
-                >
-                  Ver curso
-                </a>
               </CardContent>
             </Card>
           </div>

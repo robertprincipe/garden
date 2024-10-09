@@ -1,8 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { Link } from "~/core/link";
+import { usePathname } from "~/navigation";
 import { type SidebarNavItem } from "~/types";
-import Link from "next-intl/link";
 
 import { cn } from "~/server/utils";
 import { Icons } from "~/islands/icons";
@@ -13,6 +13,8 @@ export interface SidebarNavProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function SidebarNav({ items, className, ...props }: SidebarNavProps) {
   const pathname = usePathname();
+  // validate all of subrouters like es/dashboard/courses but only /dashboard/courses/*
+  const path = pathname.split("/").slice(0, 3).join("/");
 
   if (!items?.length) return null;
 
@@ -32,7 +34,7 @@ export function SidebarNav({ items, className, ...props }: SidebarNavProps) {
             <span
               className={cn(
                 "group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:bg-muted hover:text-foreground",
-                pathname === item.href
+                pathname.startsWith(item.href)
                   ? "bg-muted font-medium text-foreground"
                   : "text-muted-foreground",
                 item.disabled && "pointer-events-none opacity-60",

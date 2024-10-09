@@ -1,9 +1,9 @@
 "use client";
 
 import { REPOSITORY_URL } from "~/app";
+import { Link } from "~/core/link";
 import { Github } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Link from "next-intl/link";
 import { Balancer } from "react-wrap-balancer";
 import { cnBase } from "tailwind-variants";
 
